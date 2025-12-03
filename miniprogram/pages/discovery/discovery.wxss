@@ -1,0 +1,433 @@
+/**discovery.wxss**/
+page {
+  background-color: #f5f5f5;
+}
+
+.page-container {
+  min-height: 100vh;
+}
+
+/* 搜索栏 */
+.search-container {
+  background: linear-gradient(135deg, #ffb3b3 0%, #ffd1d1 100%);
+  padding: 20rpx 32rpx 30rpx;
+}
+
+.search-box {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 60rpx;
+  height: 70rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.search-icon {
+  margin-right: 20rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 分类标签栏 */
+.category-tabs {
+  background: #fff;
+  padding: 12rpx 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 2rpx solid #f0f0f0;
+  height: 80rpx; /* 设置明确的高度 */
+}
+
+/* 滚动区域 */
+.tabs-scroll-area {
+  flex: 1;
+  overflow: hidden;
+  height: 56rpx; /* 设置明确的高度，留出padding空间 */
+}
+
+.tabs-scroll {
+  width: 100%;
+  height: 56rpx; /* 与父容器一致的高度 */
+  white-space: nowrap; /* 防止换行 */
+  overflow-x: auto; /* 允许水平滚动 */
+  overflow-y: hidden; /* 隐藏垂直滚动条 */
+  /* 隐藏滚动条但保持滚动功能 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+/* WebKit 浏览器隐藏滚动条 */
+.tabs-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* 筛选按钮区域 */
+.filter-area {
+  padding: 0 32rpx 0 16rpx; /* 调整padding */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  height: 56rpx; /* 与滚动区域保持一致的高度 */
+  background: #fff; /* 确保背景色覆盖滚动条 */
+  z-index: 10; /* 确保在滚动条之上 */
+}
+
+.tabs-container {
+  display: flex;
+  padding: 0 32rpx 0 32rpx; /* 调整左右padding */
+  white-space: nowrap;
+  align-items: center; /* 垂直居中 */
+  height: 100%; /* 占满父容器高度 */
+}
+
+.tab-item {
+  padding: 8rpx 16rpx; /* 减小padding以适应较小的高度 */
+  margin-right: 16rpx;
+  border-radius: 28rpx; /* 稍微减小圆角 */
+  font-size: 24rpx;
+  color: #666;
+  background: #f8f8f8;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  line-height: 1.2; /* 确保文字垂直居中 */
+  display: flex;
+  align-items: center; /* 确保内容垂直居中 */
+}
+
+.tab-item.active {
+  background: #1890ff;
+  color: #fff;
+  font-weight: 600;
+}
+
+.sort-button {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  margin-right: 32rpx;
+  border-radius: 40rpx;
+  background: #fff;
+  border: 2rpx solid #ffb3b3;
+  flex-shrink: 0;
+}
+
+.sort-text {
+  font-size: 26rpx;
+  color: #ff8fa3;
+  margin-right: 8rpx;
+  font-weight: 600;
+}
+
+.sort-icon {
+  transform: rotate(90deg);
+}
+
+.filter-tab {
+  display: flex;
+  align-items: center;
+  padding: 8rpx 16rpx; /* 与tab-item一致的padding */
+  border-radius: 28rpx; /* 与tab-item一致的圆角 */
+  font-size: 24rpx;
+  color: #666;
+  background: #f8f8f8;
+  border: 1rpx solid #e8e8e8;
+  height: 40rpx; /* 设置明确的高度 */
+  min-width: 60rpx; /* 设置最小宽度 */
+}
+
+.filter-text {
+  margin-right: 4rpx;
+}
+
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 6rpx solid transparent;
+  border-right: 6rpx solid transparent;
+  border-top: 8rpx solid #666;
+}
+
+
+/* 博物馆列表 */
+.museum-list {
+  padding: 0 32rpx;
+}
+
+.list-header {
+  padding: 30rpx 0 20rpx;
+}
+
+.list-count {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.museum-item {
+  background: #fff;
+  border-radius: 20rpx;
+  margin-bottom: 24rpx;
+  overflow: hidden;
+  display: flex;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.museum-item:active {
+  transform: scale(0.98);
+}
+
+.museum-image {
+  width: 200rpx;
+  height: 180rpx;
+  flex-shrink: 0;
+}
+
+.museum-info {
+  flex: 1;
+  padding: 24rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.museum-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.museum-location {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.location-text {
+  font-size: 24rpx;
+  color: #999;
+  margin-left: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.museum-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+  flex-wrap: wrap;
+  gap: 8rpx;
+}
+
+.distance,
+.ticket-price,
+.visitor-count,
+.collection-count {
+  font-size: 22rpx;
+  color: #666;
+  background: #f8f8f8;
+  padding: 4rpx 8rpx;
+  border-radius: 8rpx;
+}
+
+.museum-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin-bottom: 12rpx;
+}
+
+.tag {
+  font-size: 18rpx;
+  padding: 4rpx 8rpx;
+  border-radius: 12rpx;
+  font-weight: 500;
+  color: #333;
+  border: 1rpx solid rgba(0, 0, 0, 0.1);
+}
+
+.museum-description {
+  font-size: 24rpx;
+  color: #999;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* 加载状态 */
+.loading-container {
+  padding: 40rpx;
+  text-align: center;
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 空状态 */
+.empty-container {
+  padding: 80rpx 40rpx;
+  text-align: center;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 40rpx;
+}
+
+.empty-button {
+  background: linear-gradient(135deg, #ffb3b3, #ffd1d1);
+  color: #fff;
+  padding: 20rpx 40rpx;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  display: inline-block;
+}
+
+/* 没有更多数据 */
+.no-more-container {
+  padding: 40rpx;
+  text-align: center;
+}
+
+.no-more-text {
+  font-size: 24rpx;
+  color: #ccc;
+}
+
+/* 底部间距 */
+.bottom-spacing {
+  height: 40rpx;
+}
+
+/* 筛选弹窗 */
+.filter-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.filter-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.filter-content {
+  width: 100%;
+  background: white;
+  border-radius: 32rpx 32rpx 0 0;
+  padding: 32rpx;
+  max-height: 80vh;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.filter-modal.show .filter-content {
+  transform: translateY(0);
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32rpx;
+  padding-bottom: 24rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.filter-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.filter-close {
+  padding: 8rpx;
+}
+
+.filter-section {
+  margin-bottom: 40rpx;
+}
+
+.filter-section-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24rpx;
+  display: block;
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.filter-option {
+  padding: 16rpx 24rpx;
+  border-radius: 32rpx;
+  background: #f8f8f8;
+  color: #666;
+  font-size: 26rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.2s ease;
+}
+
+.filter-option.active {
+  background: #fff0f0;
+  color: #ff8fa3;
+  border-color: #ffb3b3;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 24rpx;
+  margin-top: 48rpx;
+}
+
+.filter-reset,
+.filter-confirm {
+  flex: 1;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 44rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.filter-reset {
+  background: #f8f8f8;
+  color: #666;
+}
+
+.filter-confirm {
+  background: #ffb3b3;
+  color: white;
+}

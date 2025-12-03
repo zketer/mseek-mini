@@ -1,0 +1,241 @@
+/* login.wxss */
+
+.login-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffb3b3 0%, #ffd1d1 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 60rpx;
+  box-sizing: border-box;
+}
+
+/* 顶部区域 */
+.header {
+  width: 100%;
+  margin-bottom: 120rpx;
+}
+
+.logo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app-logo {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 32rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80rpx;
+}
+
+.app-name {
+  color: white;
+  font-size: 48rpx;
+  font-weight: bold;
+  margin-bottom: 16rpx;
+}
+
+.app-slogan {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 28rpx;
+  text-align: center;
+}
+
+/* 登录区域 */
+.login-section {
+  width: 100%;
+  max-width: 600rpx;
+  margin-bottom: auto;
+}
+
+
+/* 登录方式切换 */
+.login-tabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 48rpx;
+  margin-bottom: 40rpx;
+  padding: 8rpx;
+}
+
+.tab-item {
+  flex: 1;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+.tab-item.active {
+  background: white;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 微信登录按钮 */
+.wechat-login-btn {
+  width: 100%;
+  height: 96rpx;
+  background: white;
+  border-radius: 48rpx;
+  border: none;
+  margin-bottom: 40rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.wechat-login-btn.loading {
+  opacity: 0.7;
+}
+
+.btn-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.wechat-icon {
+  font-size: 32rpx;
+  margin-right: 16rpx;
+}
+
+.btn-text {
+  color: #333;
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+/* 账号密码登录 */
+.account-login {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 32rpx;
+}
+
+.input-wrapper {
+  position: relative;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 48rpx;
+  height: 96rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 32rpx;
+}
+
+.form-input {
+  flex: 1;
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.form-input::placeholder {
+  color: #999;
+}
+
+.password-toggle {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 16rpx;
+}
+
+.toggle-icon {
+  font-size: 32rpx;
+  color: #666;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 40rpx;
+}
+
+.forgot-password {
+  padding: 16rpx 0;
+}
+
+.account-login-btn {
+  width: 100%;
+  height: 96rpx;
+  background: white;
+  border-radius: 48rpx;
+  border: none;
+  margin-bottom: 32rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.account-login-btn[disabled] {
+  opacity: 0.5;
+}
+
+.account-login-btn.loading {
+  opacity: 0.7;
+}
+
+.register-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.register-text {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 28rpx;
+  margin-right: 8rpx;
+}
+
+/* 跳过登录 */
+.skip-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 40rpx;
+}
+
+.skip-text {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 28rpx;
+  text-decoration: underline;
+}
+
+/* 底部说明 */
+.footer {
+  width: 100%;
+  margin-top: auto;
+  padding-bottom: 40rpx;
+}
+
+.privacy-text {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 24rpx;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.link-text {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: underline;
+}

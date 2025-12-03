@@ -1,0 +1,111 @@
+<!--achievements.wxml-->
+<view class="page-container">
+  <!-- 成就概览 -->
+  <view class="achievement-header">
+    <view class="header-content">
+      <view class="stats-overview">
+        <view class="stat-item">
+          <text class="stat-number">{{unlockedAchievements}}</text>
+          <text class="stat-label">已解锁</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-number">{{totalAchievements}}</text>
+          <text class="stat-label">总成就</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-number">{{completionRate}}%</text>
+          <text class="stat-label">完成度</text>
+        </view>
+      </view>
+      
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{completionRate}}%"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分类标签 -->
+  <view class="category-section">
+    <scroll-view class="category-tabs" scroll-x>
+      <view 
+        class="category-tab {{selectedCategory === item.id ? 'active' : ''}}"
+        wx:for="{{categories}}" 
+        wx:key="id"
+        bindtap="onCategoryTap"
+        data-id="{{item.id}}"
+      >
+        <text class="tab-name">{{item.name}}</text>
+        <text class="tab-count">({{item.unlockedCount}}/{{item.count}})</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 成就列表 -->
+  <view class="achievements-section">
+    <view class="achievement-grid">
+      <view 
+        class="achievement-card {{item.unlocked ? 'unlocked' : 'locked'}} rarity-{{item.rarity}}"
+        wx:for="{{achievements}}" 
+        wx:key="id"
+        wx:if="{{selectedCategory === 'all' || item.category === selectedCategory}}"
+        bindtap="onAchievementTap"
+        bindlongpress="onShareAchievement"
+        data-id="{{item.id}}"
+      >
+        <!-- 稀有度装饰 -->
+        <view class="rarity-border" wx:if="{{item.rarity !== 'common'}}"></view>
+        
+        <!-- 成就图标 -->
+        <view class="achievement-icon {{item.unlocked ? '' : 'locked-icon'}}">
+          <text class="icon-emoji">{{item.unlocked ? item.icon : '🔒'}}</text>
+        </view>
+        
+        <!-- 成就信息 -->
+        <view class="achievement-info">
+          <text class="achievement-name">{{item.name}}</text>
+          <text class="achievement-desc">{{item.description}}</text>
+          
+          <!-- 进度条 -->
+          <view class="progress-section" wx:if="{{!item.unlocked}}">
+            <view class="progress-text">
+              <text class="progress-label">{{item.requirement}}</text>
+              <text class="progress-numbers">{{item.progress}}/{{item.target}}</text>
+            </view>
+            <view class="mini-progress-bar">
+              <view class="mini-progress-fill" style="width: {{(item.progress/item.target)*100}}%"></view>
+            </view>
+          </view>
+          
+          <!-- 解锁时间 -->
+          <view class="unlock-date" wx:if="{{item.unlocked}}">
+            <text class="date-text">{{item.unlockedDate}} 解锁</text>
+          </view>
+        </view>
+
+        <!-- 稀有度标签 -->
+        <view class="rarity-tag rarity-{{item.rarity}}" wx:if="{{item.rarity !== 'common'}}">
+          <text class="rarity-text">
+            {{item.rarity === 'rare' ? '稀有' : item.rarity === 'epic' ? '史诗' : '传说'}}
+          </text>
+        </view>
+
+        <!-- 解锁效果 -->
+        <view class="unlock-effect" wx:if="{{item.unlocked}}">
+          <text class="unlock-text">✨</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{achievements.length === 0}}">
+    <image src="/images/empty-achievements.png" class="empty-icon" mode="aspectFit" />
+    <text class="empty-text">暂无成就数据</text>
+    <text class="empty-subtitle">下拉刷新重新加载</text>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="bottom-spacing"></view>
+</view>

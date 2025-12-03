@@ -1,0 +1,5 @@
+{
+  "navigationBarTitleText": "同城博物馆",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50
+}

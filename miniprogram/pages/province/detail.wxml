@@ -1,0 +1,218 @@
+<!--detail.wxml-->
+<view class="page-container">
+  <!-- 加载状态 -->
+  <view class="loading-overlay" wx:if="{{loading}}">
+    <view class="loading-content">
+      <image src="/images/loading.gif" class="loading-icon" mode="aspectFit" />
+      <text class="loading-text">加载中...</text>
+    </view>
+  </view>
+
+  <!-- 省份概览 -->
+  <view class="province-header" wx:if="{{provinceInfo}}">
+    <view class="header-content">
+      <view class="province-title">
+        <text class="province-name">{{provinceInfo.provinceName}}</text>
+        <text class="province-subtitle">博物馆分布</text>
+      </view>
+      
+      <!-- 城市模式统计 -->
+      <view class="province-stats" wx:if="{{viewMode === 'cities'}}">
+        <view class="stat-card">
+          <text class="stat-number">{{provinceInfo.unlockedCities}}/{{provinceInfo.totalCities}}</text>
+          <text class="stat-label">城市</text>
+        </view>
+        <view class="stat-card">
+          <text class="stat-number">{{provinceInfo.visitedMuseums}}/{{provinceInfo.totalMuseums}}</text>
+          <text class="stat-label">已打卡</text>
+        </view>
+        <view class="stat-card">
+          <text class="stat-number">{{provinceInfo.completionRate}}%</text>
+          <text class="stat-label">完成度</text>
+        </view>
+      </view>
+
+      <!-- 博物馆模式统计 -->
+      <view class="province-stats" wx:if="{{viewMode === 'museums'}}">
+        <view class="stat-card">
+          <text class="stat-number">{{provinceInfo.visitedMuseums}}/{{provinceInfo.totalMuseums}}</text>
+          <text class="stat-label">已打卡</text>
+        </view>
+        <view class="stat-card">
+          <text class="stat-number">{{provinceInfo.totalMuseums - provinceInfo.visitedMuseums}}</text>
+          <text class="stat-label">待探索</text>
+        </view>
+        <view class="stat-card">
+          <text class="stat-number">{{provinceInfo.completionRate}}%</text>
+          <text class="stat-label">完成度</text>
+        </view>
+      </view>
+      
+      <view class="province-progress">
+        <view class="progress-bar">
+          <view 
+            class="progress-fill" 
+            style="width: {{provinceInfo.completionRate}}%"
+          ></view>
+        </view>
+      </view>
+      
+      <!-- 视图模式切换 -->
+      <view class="view-mode-tabs">
+        <view 
+          class="mode-tab {{viewMode === 'cities' ? 'active' : ''}}"
+          bindtap="onViewModeChange"
+          data-mode="cities"
+        >
+          <text class="mode-text">城市分布</text>
+        </view>
+        <view 
+          class="mode-tab {{viewMode === 'museums' ? 'active' : ''}}"
+          bindtap="onViewModeChange"
+          data-mode="museums"
+        >
+          <text class="mode-text">博物馆列表</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 筛选和排序（仅博物馆模式） -->
+  <view class="filter-section" wx:if="{{provinceInfo && viewMode === 'museums'}}">
+    <!-- 状态筛选 -->
+    <view class="filter-tabs">
+      <view 
+        class="filter-tab {{filterStatus === 'all' ? 'active' : ''}}"
+        bindtap="onFilterTap"
+        data-status="all"
+      >
+        <text class="tab-text">全部</text>
+      </view>
+      <view 
+        class="filter-tab {{filterStatus === 'visited' ? 'active' : ''}}"
+        bindtap="onFilterTap"
+        data-status="visited"
+      >
+        <text class="tab-text">已打卡</text>
+      </view>
+      <view 
+        class="filter-tab {{filterStatus === 'unvisited' ? 'active' : ''}}"
+        bindtap="onFilterTap"
+        data-status="unvisited"
+      >
+        <text class="tab-text">待探索</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 城市列表 -->
+  <view class="cities-section" wx:if="{{provinceInfo && viewMode === 'cities'}}">
+    <view class="cities-grid">
+      <view 
+        class="city-card {{item.visitedMuseums > 0 ? 'unlocked' : 'locked'}}"
+        wx:for="{{provinceInfo.cities}}" 
+        wx:key="cityName"
+        bindtap="onCityTap"
+        data-name="{{item.cityName}}"
+      >
+        <!-- 城市图标 -->
+        <view class="city-icon">
+          <text class="city-emoji">{{item.visitedMuseums > 0 ? '🏙️' : '🔒'}}</text>
+        </view>
+        
+        <!-- 城市信息 -->
+        <view class="city-info">
+          <text class="city-name">{{item.cityName}}</text>
+          <text class="city-stats" wx:if="{{item.visitedMuseums > 0}}">
+            {{item.visitedMuseums}}/{{item.totalMuseums}} 博物馆
+          </text>
+          <text class="city-locked" wx:if="{{item.visitedMuseums === 0}}">
+            {{item.totalMuseums}} 个博物馆待探索
+          </text>
+        </view>
+        
+        <!-- 完成度指示器 -->
+        <view class="completion-indicator" wx:if="{{item.visitedMuseums > 0}}">
+          <view class="completion-bar">
+            <view 
+              class="completion-fill" 
+              style="width: {{item.completionRate}}%"
+            ></view>
+          </view>
+        </view>
+        
+        <!-- 解锁标识 -->
+        <view class="unlock-badge" wx:if="{{item.visitedMuseums > 0}}">
+          <text class="badge-text">✨</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 博物馆列表 -->
+  <view class="museums-section" wx:if="{{provinceInfo && viewMode === 'museums'}}">
+    <view class="museums-grid">
+      <view 
+        class="museum-card {{item.isVisited ? 'visited' : 'unvisited'}}"
+        wx:for="{{filteredMuseums}}" 
+        wx:key="id"
+        bindtap="onMuseumTap"
+        data-id="{{item.id}}"
+      >
+        <!-- 博物馆Logo -->
+        <view class="museum-logo">
+          <!-- 默认图标 -->
+          <view class="default-logo">
+            <text class="museum-icon">🏛️</text>
+          </view>
+          
+          <!-- 打卡标识 (仅已打卡显示) -->
+          <view class="checkin-badge" wx:if="{{item.isVisited}}">
+            <text class="badge-icon">✓</text>
+          </view>
+        </view>
+        
+        <!-- 博物馆信息 -->
+        <view class="museum-info">
+          <text class="museum-name">{{item.name}}</text>
+          
+          <!-- 详细信息区域 -->
+          <view class="detail-info">
+            <!-- 已打卡：显示打卡日期和评分 -->
+            <block wx:if="{{item.isVisited}}">
+              <text class="visit-date">{{item.visitDate}}</text>
+              <view class="rating" wx:if="{{item.rating}}">
+                <text class="rating-text">{{item.rating}}</text>
+                <text class="star">⭐</text>
+              </view>
+            </block>
+            
+            <!-- 未打卡：显示等级信息 -->
+            <block wx:else>
+              <text class="museum-level">{{item.level}}</text>
+            </block>
+          </view>
+        </view>
+
+        <!-- 等级标签 (仅显示国家级和一级博物馆) -->
+        <view class="level-tag {{item.level === '国家级' ? 'level-national' : item.level === '国家一级' ? 'level-first-class' : 'level-professional'}}" wx:if="{{item.level === '国家级' || item.level === '国家一级'}}">
+          <text class="level-text">
+            {{item.level === '国家级' ? '国' : '一级'}}
+          </text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!loading && !provinceInfo}}">
+    <image src="/images/empty-province.png" class="empty-icon" mode="aspectFit" />
+    <text class="empty-text">省份数据加载失败</text>
+    <view class="empty-action" bindtap="onPullDownRefresh">
+      <text class="action-text">重新加载</text>
+    </view>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="bottom-spacing"></view>
+</view>

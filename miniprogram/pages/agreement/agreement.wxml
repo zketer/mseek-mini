@@ -1,0 +1,45 @@
+<!--agreement.wxml-->
+<scroll-view class="scrollarea" scroll-y type="list">
+  <!-- 协议标题 -->
+  <view class="header-section">
+    <text class="agreement-title">文博探索用户协议</text>
+    <text class="last-updated">最后更新：{{lastUpdated}}</text>
+    <!-- TODO: 待更新 - 根据实际协议更新时间调整 -->
+  </view>
+
+  <!-- 协议内容 -->
+  <view class="content-section">
+    <view class="welcome-text">
+      <text class="welcome-content">欢迎使用文博探索！在使用我们的服务前，请仔细阅读本用户协议。使用文博探索服务即表示您同意接受本协议的全部条款。</text>
+    </view>
+
+    <!-- 协议条款 -->
+    <view class="sections-container">
+      <view class="section-item" wx:for="{{sections}}" wx:key="title">
+        <text class="section-title">{{item.title}}</text>
+        <text class="section-content">{{item.content}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 联系信息 -->
+  <view class="contact-section">
+    <view class="contact-card">
+      <text class="contact-title">联系我们</text>
+      <text class="contact-content">如果您对本协议有任何疑问，请通过以下方式联系我们：</text>
+      <view class="contact-info">
+        <text class="contact-item">邮箱：museumseek@163.com</text>
+        <text class="contact-item">地址：xxx</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 返回顶部按钮 -->
+  <view class="back-to-top" bindtap="scrollToTop">
+    <icon type="success" size="20" color="#fff"></icon>
+    <text class="back-text">返回顶部</text>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="bottom-spacing"></view>
+</scroll-view>

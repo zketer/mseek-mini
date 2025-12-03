@@ -1,0 +1,132 @@
+<!--checkin.wxml-->
+<view class="page-container">
+  <!-- 打卡卡片 -->
+  <view class="checkin-card" wx:if="{{nearestMuseum}}">
+    <view class="card-header">
+      <view class="location-info">
+        <text class="location-icon">📍</text>
+        <text class="current-location">{{currentLocation}}</text>
+        <view class="refresh-btn" bindtap="onRefreshLocation">
+          <image src="/images/refresh.svg" class="refresh-icon" mode="aspectFit" />
+        </view>
+      </view>
+    </view>
+    
+    <view class="card-content">
+      <image src="{{nearestMuseum.image}}" mode="aspectFill" class="museum-image" />
+      <view class="museum-info">
+        <text class="museum-name">{{nearestMuseum.name}}</text>
+        <view class="museum-distance">
+          <icon type="locationfill" size="12" color="#999"></icon>
+          <text class="distance-text">距离{{nearestMuseum.distance}}</text>
+        </view>
+        <view class="museum-status">
+          <view class="status-dot {{nearestMuseum.canCheckin ? 'status-available' : 'status-unavailable'}}"></view>
+          <text class="status-text">{{nearestMuseum.canCheckin ? '在打卡范围内' : '距离过远，无法打卡'}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <view class="card-actions">
+      <view class="checkin-main-btn {{nearestMuseum.canCheckin ? 'btn-enabled' : 'btn-disabled'}}" 
+            bindtap="onMainCheckinTap" 
+            data-id="{{nearestMuseum.id}}">
+        {{nearestMuseum.canCheckin ? '立即打卡' : '前往博物馆'}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 暂存卡片 -->
+  <view class="draft-card" wx:if="{{isLoggedIn && draftCount > 0}}" bindtap="onViewDraftList">
+    <view class="draft-icon">📝</view>
+    <view class="draft-info">
+      <text class="draft-title">暂存草稿</text>
+      <text class="draft-desc">{{draftCount}}个未完成的打卡</text>
+    </view>
+    <view class="draft-arrow">></view>
+  </view>
+
+  <!-- 打卡记录 -->
+  <view class="history-section">
+    <view class="section-header-simple">
+      <text class="section-title">最近打卡</text>
+      <text class="section-more" bindtap="onViewHistory">查看全部</text>
+    </view>
+
+    <view class="history-list" wx:if="{{checkinHistory.length > 0}}">
+      <view class="history-item" wx:for="{{checkinHistory}}" wx:key="id" bindtap="onHistoryTap" data-id="{{item.id}}">
+        <image src="{{item.image}}" mode="aspectFill" class="history-image" />
+        <view class="history-info">
+          <view class="history-name">{{item.museumName}}</view>
+          <view class="history-time">{{item.checkinTime}}</view>
+          <view class="history-points">+{{item.points}}积分</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-history" wx:else>
+      <image src="/images/Icon1.png" class="empty-icon" mode="aspectFit" />
+      <text class="empty-text">还没有打卡记录</text>
+      <text class="empty-desc">去发现页面找找心仪的博物馆吧</text>
+    </view>
+  </view>
+
+  <!-- 附近博物馆 -->
+  <view class="nearby-section">
+    <view class="section-header">
+      <view class="header-main">
+        <text class="section-title">附近博物馆</text>
+        
+        <!-- 距离选择器 -->
+        <view class="distance-selector">
+          <text class="distance-label">范围</text>
+          <view class="distance-tabs">
+            <view 
+              class="distance-tab {{selectedDistance === 10 ? 'tab-active' : ''}}" 
+              bindtap="onDistanceSelect" 
+              data-distance="10"
+            >
+              10
+            </view>
+            <view 
+              class="distance-tab {{selectedDistance === 30 ? 'tab-active' : ''}}" 
+              bindtap="onDistanceSelect" 
+              data-distance="30"
+            >
+              30
+            </view>
+            <view 
+              class="distance-tab {{selectedDistance === 50 ? 'tab-active' : ''}}" 
+              bindtap="onDistanceSelect" 
+              data-distance="50"
+            >
+              50
+            </view>
+          </view>
+          <text class="distance-unit">km</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="nearby-list">
+      <view class="nearby-item" wx:for="{{nearbyMuseums}}" wx:key="id" bindtap="onNearbyMuseumTap" data-id="{{item.id}}">
+        <image src="{{item.image}}" mode="aspectFill" class="nearby-image" />
+        <view class="nearby-info">
+          <view class="nearby-name">{{item.name}}</view>
+          <view class="nearby-distance">
+            <icon type="locationfill" size="12" color="#999"></icon>
+            <text class="distance-text">距离{{item.distance}}</text>
+          </view>
+          <view class="nearby-status">
+            <view class="status-dot {{item.canCheckin ? 'status-available' : 'status-unavailable'}}"></view>
+            <text class="status-text">{{item.canCheckin ? '可打卡' : '距离过远'}}</text>
+          </view>
+        </view>
+
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="bottom-spacing"></view>
+</view>

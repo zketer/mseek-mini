@@ -1,0 +1,220 @@
+<!--user/favorites.wxml-->
+<view class="page-container">
+  <!-- 收藏概览 -->
+  <view class="favorites-header">
+    <view class="header-content">
+      <view class="stats-overview">
+        <view class="stat-item">
+          <text class="stat-number">{{totalFavoriteMuseums}}</text>
+          <text class="stat-label">博物馆</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-number">{{totalFavoriteExhibitions}}</text>
+          <text class="stat-label">展览</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-number">{{totalFavoriteMuseums + totalFavoriteExhibitions}}</text>
+          <text class="stat-label">总收藏</text>
+        </view>
+      </view>
+      
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{Math.min((totalFavoriteMuseums + totalFavoriteExhibitions) * 10, 100)}}%"></view>
+      </view>
+
+      <!-- 顶部切换，采用“我的打卡”同款样式 -->
+      <view class="header-actions">
+        <view class="view-mode-tabs">
+          <view 
+            class="mode-tab {{activeTab === 'museums' ? 'active' : ''}}"
+            bindtap="onTabChange"
+            data-tab="museums"
+          >
+            <text class="mode-text">博物馆</text>
+          </view>
+          <view 
+            class="mode-tab {{activeTab === 'exhibitions' ? 'active' : ''}}"
+            bindtap="onTabChange"
+            data-tab="exhibitions"
+          >
+            <text class="mode-text">展览</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 博物馆收藏视图 -->
+  <view wx:if="{{activeTab === 'museums'}}">
+    
+
+    <!-- 博物馆列表 -->
+    <view class="museums-section">
+      <view class="museum-list">
+        <view 
+          class="museum-card {{item.isVisited ? 'visited' : 'unvisited'}}"
+          wx:for="{{favoriteMuseums}}" 
+          wx:key="id"
+          wx:if="{{museumFilter === 'all' || (museumFilter === 'visited' && item.isVisited) || (museumFilter === 'unvisited' && !item.isVisited)}}"
+          bindtap="onMuseumTap"
+          data-id="{{item.id}}"
+        >
+          <view class="fav-star" catchtap="onFavoriteStarTap" data-type="museum" data-id="{{item.id}}">
+            <image src="/images/favorite.svg" class="fav-star-icon" mode="aspectFit" />
+          </view>
+          <!-- 博物馆图片 -->
+          <view class="museum-image">
+            <image 
+              src="{{item.images && item.images[0] ? item.images[0] : '/images/default-museum.jpg'}}" 
+              class="image"
+              mode="aspectFill"
+            />
+            <view class="visited-badge" wx:if="{{item.isVisited}}">
+              <text class="badge-text">已打卡</text>
+            </view>
+          </view>
+          
+          <!-- 博物馆信息 -->
+          <view class="museum-content">
+            <view class="museum-main">
+              <text class="museum-name">{{item.name}}</text>
+              <text class="museum-location">{{item.provinceName}} · {{item.cityName}}</text>
+              <text class="museum-address">{{item.address}}</text>
+              
+              <view class="museum-meta">
+                <view class="level-tag">
+                  <text class="level-text">{{item.level}}</text>
+                </view>
+                <view class="category-tag">
+                  <text class="category-text">{{item.category}}</text>
+                </view>
+                <view class="price-tag" wx:if="{{item.ticketPrice}}">
+                  <text class="price-text">{{item.ticketPrice}}</text>
+                </view>
+              </view>
+            </view>
+            
+            <view class="museum-actions">
+              <view class="action-info">
+                <view class="rating" wx:if="{{item.rating}}">
+                  <text class="rating-text">{{item.rating}}</text>
+                  <text class="star">⭐</text>
+                </view>
+              </view>
+                         
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 展览收藏视图 -->
+  <view wx:if="{{activeTab === 'exhibitions'}}">
+    <!-- 筛选选项 -->
+    <view class="filter-section">
+      <view class="filter-tabs">
+        <view 
+          class="filter-tab {{exhibitionFilter === 'all' ? 'active' : ''}}"
+          bindtap="onExhibitionFilterTap"
+          data-filter="all"
+        >
+          <text class="tab-text">全部</text>
+        </view>
+        <view 
+          class="filter-tab {{exhibitionFilter === 'ongoing' ? 'active' : ''}}"
+          bindtap="onExhibitionFilterTap"
+          data-filter="ongoing"
+        >
+          <text class="tab-text">进行中</text>
+        </view>
+        <view 
+          class="filter-tab {{exhibitionFilter === 'upcoming' ? 'active' : ''}}"
+          bindtap="onExhibitionFilterTap"
+          data-filter="upcoming"
+        >
+          <text class="tab-text">即将开始</text>
+        </view>
+        <view 
+          class="filter-tab {{exhibitionFilter === 'ended' ? 'active' : ''}}"
+          bindtap="onExhibitionFilterTap"
+          data-filter="ended"
+        >
+          <text class="tab-text">已结束</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 展览列表 -->
+    <view class="exhibitions-section">
+      <view class="exhibition-list">
+        <view 
+          class="exhibition-card"
+          wx:for="{{favoriteExhibitions}}" 
+          wx:key="id"
+          wx:if="{{exhibitionFilter === 'all' || item.status === exhibitionFilter}}"
+          bindtap="onExhibitionTap"
+          data-id="{{item.id}}"
+        >
+          <view class="fav-star" catchtap="onFavoriteStarTap" data-type="exhibition" data-id="{{item.id}}">
+            <image src="/images/favorite.svg" class="fav-star-icon" mode="aspectFit" />
+          </view>
+          <!-- 展览图片 -->
+          <view class="exhibition-image">
+            <image 
+              src="{{item.images && item.images[0] ? item.images[0] : '/images/default-exhibition.jpg'}}" 
+              class="image"
+              mode="aspectFill"
+            />
+            <view class="status-badge status-{{item.status}}">
+              <text class="status-text">
+                {{item.status === 'ongoing' ? '进行中' : item.status === 'upcoming' ? '即将开始' : '已结束'}}
+              </text>
+            </view>
+          </view>
+          
+          <!-- 展览信息 -->
+          <view class="exhibition-content">
+            <view class="exhibition-main">
+              <text class="exhibition-title">{{item.title}}</text>
+              <text class="exhibition-museum">{{item.museumName}} · {{item.cityName}}</text>
+              
+              <view class="exhibition-time">
+                <text class="time-text">
+                  {{item.isPermanent ? '长期展览' : item.startDate + ' - ' + item.endDate}}
+                </text>
+              </view>
+              
+              <view class="exhibition-meta">
+                <view class="category-tag">
+                  <text class="category-text">{{item.category}}</text>
+                </view>
+                <view class="price-tag" wx:if="{{item.ticketPrice}}">
+                  <text class="price-text">{{item.ticketPrice}}</text>
+                </view>
+              </view>
+            </view>
+            
+            <view class="exhibition-actions">
+              
+              
+              
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{(activeTab === 'museums' && totalFavoriteMuseums === 0) || (activeTab === 'exhibitions' && totalFavoriteExhibitions === 0)}}">
+    <image src="/images/empty-favorites.png" class="empty-icon" mode="aspectFit" />
+    <text class="empty-text">{{activeTab === 'museums' ? '暂无收藏的博物馆' : '暂无收藏的展览'}}</text>
+    <text class="empty-subtitle">去发现页面探索更多内容吧！</text>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="bottom-spacing"></view>
+</view>

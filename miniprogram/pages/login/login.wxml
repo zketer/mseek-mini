@@ -1,0 +1,104 @@
+<!-- login.wxml -->
+<view class="login-container">
+  <!-- 顶部区域 -->
+  <view class="header">
+    <view class="logo-section">
+      <view class="app-logo">🏛️</view>
+      <text class="app-name">文博探索</text>
+      <text class="app-slogan">探索博物馆，记录文化之旅</text>
+    </view>
+  </view>
+
+  <!-- 登录区域 -->
+  <view class="login-section">
+    <!-- 登录方式切换 -->
+    <view class="login-tabs">
+      <view class="tab-item {{loginType === 'wechat' ? 'active' : ''}}" bindtap="onLoginTypeChange" data-type="wechat">
+        <text>微信登录</text>
+      </view>
+      <view class="tab-item {{loginType === 'account' ? 'active' : ''}}" bindtap="onLoginTypeChange" data-type="account">
+        <text>账号登录</text>
+      </view>
+    </view>
+
+    <!-- 微信登录 -->
+    <view class="wechat-login" wx:if="{{loginType === 'wechat'}}">
+      <button 
+        class="wechat-login-btn {{loading ? 'loading' : ''}}" 
+        bindtap="onWechatLogin"
+        disabled="{{loading}}"
+      >
+        <view class="btn-content">
+          <text class="wechat-icon">💬</text>
+          <text class="btn-text">{{loading ? '登录中...' : '微信一键登录'}}</text>
+        </view>
+      </button>
+    </view>
+
+    <!-- 账号密码登录 -->
+    <view class="account-login" wx:if="{{loginType === 'account'}}">
+      <view class="form-group">
+        <view class="input-wrapper">
+          <input 
+            class="form-input" 
+            type="text" 
+            placeholder="请输入用户名/手机号/邮箱"
+            value="{{formData.username}}"
+            bindinput="onUsernameInput"
+            maxlength="50"
+          />
+        </view>
+      </view>
+      
+      <view class="form-group">
+        <view class="input-wrapper">
+          <input 
+            class="form-input" 
+            type="{{showPassword ? 'text' : 'password'}}"
+            placeholder="请输入密码"
+            value="{{formData.password}}"
+            bindinput="onPasswordInput"
+            maxlength="20"
+          />
+          <view class="password-toggle" bindtap="onTogglePassword">
+            <text class="toggle-icon">{{showPassword ? '👁️' : '👁️‍🗨️'}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="form-actions">
+        <view class="forgot-password" bindtap="onForgotPassword">
+          <text class="link-text">忘记密码？</text>
+        </view>
+      </view>
+
+      <button 
+        class="account-login-btn {{loading ? 'loading' : ''}}" 
+        bindtap="onAccountLogin"
+        disabled="{{loading || !formData.username || !formData.password}}"
+      >
+        <text class="btn-text">{{loading ? '登录中...' : '登录'}}</text>
+      </button>
+
+      <view class="register-section">
+        <text class="register-text">还没有账号？</text>
+        <text class="link-text" bindtap="onRegister">立即注册</text>
+      </view>
+    </view>
+
+    <!-- 跳过登录 -->
+    <view class="skip-section">
+      <text class="skip-text" bindtap="onSkipLogin">暂时跳过，以游客身份浏览</text>
+    </view>
+  </view>
+
+  <!-- 底部说明 -->
+  <view class="footer">
+    <view class="privacy-text">
+      登录即表示同意
+      <text class="link-text" bindtap="onPrivacyTap">《用户协议》</text>
+      和
+      <text class="link-text" bindtap="onPrivacyTap">《隐私政策》</text>
+    </view>
+  </view>
+</view>

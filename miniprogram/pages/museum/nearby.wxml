@@ -1,0 +1,88 @@
+<!--nearby.wxml-->
+<view class="page-container">
+  
+  <!-- 定位信息和搜索栏 -->
+  <view class="header-container">
+    <view class="header-row">
+      <!-- 定位信息 -->
+      <view class="location-info" wx:if="{{currentLocation}}" bindtap="onRefreshLocation">
+        <view class="location-icon">📍</view>
+        <text class="location-text">{{currentLocation.cityName || '正在定位...'}}</text>
+      </view>
+      
+      <!-- 搜索框 -->
+      <view class="search-container">
+        <view class="search-box">
+          <icon type="search" size="16" color="#999" class="search-icon"></icon>
+          <input class="search-input" 
+                 placeholder="搜索博物馆名称" 
+                 value="{{searchKeyword}}"
+                 bindinput="onSearchInput"
+                 bindconfirm="onSearchConfirm"
+                 confirm-type="search" />
+          <view wx:if="{{searchKeyword}}" class="search-clear" bindtap="onSearchClear">
+            <icon type="clear" size="14" color="#ccc"></icon>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 博物馆列表 -->
+  <view class="museum-list">
+    <view class="list-header" wx:if="{{museums.length > 0}}">
+      <text class="list-count">同城共有 {{total}} 家博物馆</text>
+    </view>
+    
+    <view class="museum-item" wx:for="{{museums}}" wx:key="id" bindtap="onMuseumTap" data-id="{{item.id}}">
+      <image src="{{item.image || '/images/default-museum.png'}}" mode="aspectFill" class="museum-image" />
+      <view class="museum-info">
+        <view class="museum-name">{{item.name}}</view>
+        <view class="museum-location">
+          <icon type="locationfill" size="12" color="#999"></icon>
+          <text class="location-text">{{item.address || item.cityName}}</text>
+        </view>
+        <view class="museum-meta">
+          <text class="distance" wx:if="{{item.distance}}">距离: {{item.distance}}km</text>
+          <text class="collection-count" wx:if="{{item.collectionCount}}">藏品: {{item.collectionCount}}件</text>
+        </view>
+        <view class="museum-tags" wx:if="{{item.tags && item.tags.length > 0}}">
+          <view wx:for="{{item.tags}}" wx:key="id" wx:for-item="tag" class="tag" style="background-color: {{tag.color || '#f0f8ff'}};">
+            {{tag.name}}
+          </view>
+        </view>
+        <view class="museum-description" wx:if="{{item.description}}">
+          {{item.description}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 定位失败提示 -->
+  <view class="location-error" wx:if="{{locationError && museums.length === 0 && !loading}}">
+    <view class="error-icon">📍</view>
+    <text class="error-title">需要定位权限</text>
+    <text class="error-desc">为了为您展示同城的博物馆，需要获取您的位置信息</text>
+    <view class="retry-button" bindtap="onRetryLocation">重新定位</view>
+    <view class="setting-button" bindtap="onOpenSetting">打开设置</view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-container" wx:if="{{!loading && !locationError && museums.length === 0}}">
+    <text class="empty-text">同城暂无博物馆</text>
+    <view class="empty-button" bindtap="onRefresh">刷新</view>
+  </view>
+
+  <!-- 没有更多数据 -->
+  <view class="no-more-container" wx:if="{{!loading && museums.length > 0 && !hasMore}}">
+    <text class="no-more-text">没有更多数据了</text>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="bottom-spacing"></view>
+</view>

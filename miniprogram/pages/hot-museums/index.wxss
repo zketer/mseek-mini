@@ -1,0 +1,293 @@
+/* 热门博物馆列表页面样式 - 与首页风格统一 */
+.hot-museums-container {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+}
+
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 4rpx solid rgba(255, 107, 107, 0.2);
+  border-top: 4rpx solid #ffb3b3;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-spinner.small {
+  width: 40rpx;
+  height: 40rpx;
+  border-width: 3rpx;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+
+/* 博物馆列表 - 与首页风格统一 */
+.museums-list {
+  padding: 40rpx 32rpx 100rpx;
+}
+
+/* 搜索框 - 与首页风格统一 */
+.search-container {
+  margin-bottom: 24rpx;
+}
+
+.search-box {
+  background: white;
+  border-radius: 50rpx;
+  height: 70rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.search-icon {
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.search-clear {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f5f5f5;
+  margin-left: 10rpx;
+  flex-shrink: 0;
+}
+
+/* 统计信息 - 与首页section风格统一 */
+.stats-header {
+  background: white;
+  padding: 30rpx;
+  border-radius: 20rpx;
+  margin-bottom: 24rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.stats-text {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+}
+
+.stats-desc {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+  display: block;
+}
+
+/* 博物馆网格布局 */
+.museums-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* 博物馆卡片 - 两列布局 */
+.museum-card {
+  width: 48%;
+  background: #fff;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.museum-card:active {
+  transform: scale(0.98);
+}
+
+
+/* 博物馆图片 - 适配两列布局 */
+.museum-image {
+  position: relative;
+  width: 100%;
+  height: 140rpx;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* 博物馆信息 - 适配两列紧凑布局 */
+.museum-info {
+  padding: 16rpx 14rpx;
+}
+
+.museum-name {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10rpx;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  height: 68rpx;
+}
+
+.museum-location {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.location-icon {
+  font-size: 16rpx;
+  margin-right: 4rpx;
+  flex-shrink: 0;
+}
+
+.location-text {
+  font-size: 20rpx;
+  color: #999;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+/* 底部标签 - 支持多标签换行布局 */
+.museum-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6rpx;
+  margin-top: 8rpx;
+}
+
+.tag {
+  font-size: 18rpx;
+  padding: 4rpx 8rpx;
+  border-radius: 12rpx;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 120rpx;
+}
+
+.rating-tag {
+  background: linear-gradient(135deg, #1890ff, #40a9ff);
+  color: white;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 2rpx;
+}
+
+.rating-score {
+  font-size: 16rpx;
+  font-weight: bold;
+}
+
+.rating-star {
+  font-size: 14rpx;
+  color: #ffd700;
+}
+
+.price-tag {
+  background: linear-gradient(135deg, #52c41a, #73d13d);
+  color: white;
+  flex-shrink: 0;
+}
+
+.backend-tag {
+  color: #333;
+  border: 1rpx solid rgba(0, 0, 0, 0.1);
+  font-size: 16rpx;
+  padding: 2rpx 6rpx;
+}
+
+/* 加载更多 */
+.loading-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx 0;
+  gap: 20rpx;
+}
+
+/* 没有更多数据 */
+.no-more {
+  text-align: center;
+  padding: 40rpx 0;
+}
+
+.no-more-text {
+  font-size: 26rpx;
+  color: #999;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.empty-desc {
+  font-size: 26rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 40rpx;
+}
+
+.empty-button {
+  background: linear-gradient(135deg, #ffb3b3 0%, #ffd1d1 100%);
+  color: white;
+  border: none;
+  padding: 20rpx 40rpx;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+}

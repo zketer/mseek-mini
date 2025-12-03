@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "社交广场",
+  "enablePullDownRefresh": true, 
+  "backgroundColor": "#f5f5f5",
+  "usingComponents": {}
+}

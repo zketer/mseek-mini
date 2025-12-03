@@ -1,0 +1,132 @@
+<!--checkin-detail.wxml-->
+<view class="checkin-detail-container">
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <view class="loading-content">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+  </view>
+
+  <!-- 错误状态 -->
+  <view class="error-container" wx:if="{{error}}">
+    <view class="error-content">
+      <text class="error-icon">⚠️</text>
+      <text class="error-text">{{error}}</text>
+      <button class="retry-btn" bindtap="onRetry">重新加载</button>
+    </view>
+  </view>
+
+  <!-- 打卡详情内容 -->
+  <scroll-view class="detail-scroll" scroll-y wx:if="{{checkinDetail && !loading && !error}}">
+    <!-- 头部信息 -->
+    <view class="detail-header" bindtap="onViewMuseum">
+      <view class="museum-info">
+        <text class="museum-name">{{checkinDetail.museumName}}</text>
+        <text class="museum-location">{{checkinDetail.provinceName}} · {{checkinDetail.cityName}}</text>
+        <text class="museum-address">{{checkinDetail.museumAddress}}</text>
+      </view>
+      
+      <view class="checkin-time">
+        <text class="date">{{checkinDetail.checkInDate}}</text>
+        <text class="time">{{checkinDetail.checkInTime}}</text>
+      </view>
+      
+      <!-- 右箭头指示器 -->
+      <view class="arrow-indicator">
+        <text class="arrow-icon">></text>
+      </view>
+    </view>
+
+    <!-- 打卡内容卡片 -->
+    <view class="checkin-content-card">
+      <!-- 打卡照片 -->
+      <view class="photos-section" wx:if="{{checkinDetail.photos && checkinDetail.photos.length > 0}}">
+        <view class="section-title">
+          <view class="title-group">
+            <text class="title-text">打卡照片</text>
+            <text class="photo-count">({{checkinDetail.photos.length}}张)</text>
+          </view>
+          <view class="card-actions">
+            <view class="action-btn edit" bindtap="onEdit">
+              <image class="action-icon-img" src="/images/edit.svg" mode="aspectFit" />
+            </view>
+            <view class="action-btn delete" bindtap="onDelete">
+              <image class="action-icon-img" src="/images/delete.svg" mode="aspectFit" />
+            </view>
+          </view>
+        </view>
+        
+        <view class="photos-grid">
+          <image 
+            wx:for="{{checkinDetail.photos}}" 
+            wx:key="index"
+            src="{{item}}" 
+            class="photo-item"
+            mode="aspectFill"
+            bindtap="onViewPhotos"
+            data-index="{{index}}"
+          />
+        </view>
+      </view>
+
+      <!-- 打卡笔记 -->
+      <view class="notes-section" wx:if="{{checkinDetail.notes}}">
+        <view class="section-title">
+          <text class="title-text">打卡感受</text>
+        </view>
+        <view class="notes-content">
+          <text class="notes-text">{{checkinDetail.notes}}</text>
+        </view>
+      </view>
+
+      <!-- 评分和心情 -->
+      <view class="rating-mood-section">
+        <view class="rating-item" wx:if="{{checkinDetail.rating}}">
+          <text class="item-label">评分</text>
+          <view class="rating-stars">
+            <text class="star {{index < checkinDetail.rating ? 'filled' : ''}}" 
+                  wx:for="{{[1,2,3,4,5]}}" wx:key="index">⭐</text>
+          </view>
+        </view>
+        
+        <view class="mood-item" wx:if="{{checkinDetail.mood}}">
+          <text class="item-label">心情</text>
+          <text class="mood-value">{{checkinDetail.mood}}</text>
+        </view>
+        
+        <view class="weather-item" wx:if="{{checkinDetail.weather}}">
+          <text class="item-label">天气</text>
+          <text class="weather-value">{{checkinDetail.weather}}</text>
+        </view>
+      </view>
+
+      <!-- 同行伙伴 -->
+      <view class="companions-section" wx:if="{{checkinDetail.companions && checkinDetail.companions.length > 0}}">
+        <view class="section-title">
+          <text class="title-text">同行伙伴</text>
+        </view>
+        <view class="companions-list">
+          <text class="companion-item" wx:for="{{checkinDetail.companions}}" wx:key="index">
+            {{item}}
+          </text>
+        </view>
+      </view>
+
+      <!-- 标签 -->
+      <view class="tags-section" wx:if="{{checkinDetail.tags && checkinDetail.tags.length > 0}}">
+        <view class="section-title">
+          <text class="title-text">标签</text>
+        </view>
+        <view class="tags-list">
+          <text class="tag-item" wx:for="{{checkinDetail.tags}}" wx:key="index">
+            #{{item}}
+          </text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部间距 -->
+    <view class="bottom-spacing"></view>
+  </scroll-view>
+</view>

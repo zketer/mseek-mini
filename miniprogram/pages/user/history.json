@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "打卡历史",
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#f5f5f5"
+}

@@ -1,0 +1,146 @@
+<!--city/detail.wxml-->
+<view class="page-container">
+  <!-- 加载状态 -->
+  <view class="loading-overlay" wx:if="{{loading}}">
+    <view class="loading-content">
+      <image src="/images/loading.gif" class="loading-icon" mode="aspectFit" />
+      <text class="loading-text">加载中...</text>
+    </view>
+  </view>
+
+  <!-- 城市概览 -->
+  <view class="city-header" wx:if="{{cityInfo}}">
+    <view class="header-content">
+      <view class="city-title">
+        <text class="city-name">{{cityInfo.cityName}}</text>
+        <text class="city-subtitle">{{cityInfo.provinceName}} · 博物馆足迹</text>
+      </view>
+      
+      <view class="city-stats">
+        <view class="stat-card">
+          <text class="stat-number">{{cityInfo.visitedMuseums}}</text>
+          <text class="stat-label">已打卡</text>
+        </view>
+        <view class="stat-card">
+          <text class="stat-number">{{cityInfo.totalMuseums - cityInfo.visitedMuseums}}</text>
+          <text class="stat-label">待探索</text>
+        </view>
+        <view class="stat-card">
+          <text class="stat-number">{{cityInfo.completionRate}}%</text>
+          <text class="stat-label">完成度</text>
+        </view>
+      </view>
+      
+      <view class="city-progress">
+        <view class="progress-bar">
+          <view 
+            class="progress-fill" 
+            style="width: {{cityInfo.completionRate}}%"
+          ></view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 筛选和排序 -->
+  <view class="filter-section" wx:if="{{cityInfo}}">
+    <!-- 状态筛选 -->
+    <view class="filter-tabs">
+      <view 
+        class="filter-tab {{filterStatus === 'all' ? 'active' : ''}}"
+        bindtap="onFilterTap"
+        data-status="all"
+      >
+        <text class="tab-text">全部</text>
+      </view>
+      <view 
+        class="filter-tab {{filterStatus === 'visited' ? 'active' : ''}}"
+        bindtap="onFilterTap"
+        data-status="visited"
+      >
+        <text class="tab-text">已打卡</text>
+      </view>
+      <view 
+        class="filter-tab {{filterStatus === 'unvisited' ? 'active' : ''}}"
+        bindtap="onFilterTap"
+        data-status="unvisited"
+      >
+        <text class="tab-text">待探索</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 博物馆列表 -->
+  <view class="museums-section" wx:if="{{cityInfo}}">
+    
+    <view class="museums-grid">
+      <view 
+        class="museum-card {{item.isVisited ? 'visited' : 'unvisited'}}"
+        wx:for="{{filteredMuseums}}" 
+        wx:key="id"
+        bindtap="onMuseumTap"
+        data-id="{{item.id}}"
+      >
+        <!-- 博物馆Logo -->
+        <view class="museum-logo">
+          <!-- 默认图标 -->
+          <view class="default-logo">
+            <text class="museum-icon">🏛️</text>
+          </view>
+          
+          <!-- 打卡标识 (仅已打卡显示) -->
+          <view class="checkin-badge" wx:if="{{item.isVisited}}">
+            <text class="badge-icon">✓</text>
+          </view>
+        </view>
+        
+        <!-- 博物馆信息 -->
+        <view class="museum-info">
+          <text class="museum-name">{{item.name}}</text>
+          
+          <!-- 详细信息区域 -->
+          <view class="detail-info">
+            <!-- 已打卡：显示打卡日期和评分 -->
+            <block wx:if="{{item.isVisited}}">
+              <text class="visit-date">{{item.visitDate}}</text>
+              <view class="rating" wx:if="{{item.rating}}">
+                <text class="rating-text">{{item.rating}}</text>
+                <text class="star">⭐</text>
+              </view>
+            </block>
+            
+            <!-- 未打卡：显示等级信息 -->
+            <block wx:else>
+              <text class="museum-level">{{item.level}}</text>
+            </block>
+          </view>
+        </view>
+
+        <!-- 等级标签 (仅显示国家级和一级博物馆) -->
+        <view class="level-tag {{item.level === '国家级' ? 'level-national' : item.level === '国家一级' ? 'level-first-class' : 'level-professional'}}" wx:if="{{item.level === '国家级' || item.level === '国家一级'}}">
+          <text class="level-text">
+            {{item.level === '国家级' ? '国' : '一级'}}
+          </text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!loading && !cityInfo}}">
+    <image src="/images/empty-city.png" class="empty-icon" mode="aspectFit" />
+    <text class="empty-text">城市数据加载失败</text>
+    <view class="empty-action" bindtap="onPullDownRefresh">
+      <text class="action-text">重新加载</text>
+    </view>
+  </view>
+
+  <!-- 城市为空状态 -->
+  <view class="empty-state" wx:if="{{cityInfo && cityInfo.museums.length === 0}}">
+    <image src="/images/empty-museums.png" class="empty-icon" mode="aspectFit" />
+    <text class="empty-text">该城市暂无博物馆数据</text>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="bottom-spacing"></view>
+</view>

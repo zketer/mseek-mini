@@ -35,3 +35,6 @@ yarn-error.log*
 
 # 微信开发者工具生成
 .miniapp/
+
+# 项目私有配置（包含个人 AppID 等）
+project.private.config.json

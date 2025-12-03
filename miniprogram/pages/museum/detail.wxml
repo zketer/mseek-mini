@@ -1,0 +1,196 @@
+<!--museum/detail.wxml-->
+<view class="page-container">
+  <view wx:if="{{loading}}" class="loading-container">
+    <view class="loading-content">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+  </view>
+
+  <view wx:elif="{{error}}" class="error-container">
+    <view class="error-content">
+      <image src="/images/Icon1.png" class="error-icon" mode="aspectFit" />
+      <text class="error-text">{{error}}</text>
+      <button class="retry-btn" bindtap="loadMuseumDetail">重新加载</button>
+    </view>
+  </view>
+
+  <view wx:elif="{{museumDetail}}" class="main-content">
+  <!-- 图片轮播 -->
+  <view class="image-section">
+    <swiper class="image-swiper" autoplay="{{true}}" interval="4000" duration="500" circular="{{true}}" indicator-dots="{{true}}" indicator-color="rgba(255,255,255,0.5)" indicator-active-color="#fff">
+      <swiper-item wx:for="{{museumDetail.images}}" wx:key="*this">
+        <image src="{{item}}" mode="aspectFill" class="detail-image" bindtap="onImagePreview" data-url="{{item}}" />
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <!-- 博物馆信息 -->
+  <view class="info-section">
+    <view class="museum-header">
+      <view class="title-with-actions">
+        <view class="museum-title">{{museumDetail.name}}</view>
+        <view class="header-actions">
+          <view class="header-btn" bindtap="onFavorite">
+            <image wx:if="{{museumDetail.isFavorited}}" src="/images/favorite.svg" class="svg-icon favorite-icon" mode="aspectFit" />
+            <image wx:else src="/images/favorite.svg" class="svg-icon favorite-icon-outline" mode="aspectFit" />
+          </view>
+          <view class="header-btn" bindtap="onNavigation">
+            <image src="/images/navigation.svg" class="svg-icon navigation-icon-dark" mode="aspectFit" />
+          </view>
+        </view>
+      </view>
+      <view class="museum-rating">
+        <text class="rating-score">{{museumDetail.rating}}</text>
+        <text class="rating-total">/5.0 ({{museumDetail.reviewCount}}条评价)</text>
+      </view>
+    </view>
+
+    <view class="museum-meta">
+      <view class="meta-item">
+        <icon type="locationfill" size="14" color="#999"></icon>
+        <text class="meta-text">{{museumDetail.address}}</text>
+      </view>
+      <view class="meta-item">
+        <icon type="clock" size="14" color="#999"></icon>
+        <text class="meta-text">{{museumDetail.openTime}}</text>
+      </view>
+      <view class="meta-item" wx:if="{{museumDetail.freeAdmission}}">
+        <icon type="money" size="14" color="#4CAF50"></icon>
+        <text class="meta-text free-admission">免费开放</text>
+      </view>
+      <view class="meta-item" wx:else>
+        <icon type="money" size="14" color="#999"></icon>
+        <text class="meta-text">¥{{museumDetail.ticketPrice || 0}}/人</text>
+      </view>
+      <view class="meta-item" wx:if="{{museumDetail.level}}">
+        <icon type="star" size="14" color="#FFD700"></icon>
+        <text class="meta-text">国家{{museumDetail.level === 1 ? '一' : museumDetail.level === 2 ? '二' : '三'}}级博物馆</text>
+      </view>
+    </view>
+
+    <!-- 博物馆标签 -->
+    <view class="museum-tags">
+      <!-- 评分标签 -->
+      <view class="tag rating-tag">
+        <text class="rating-score-tag">{{museumDetail.rating || 4.5}}</text>
+        <text class="rating-star">★</text>
+      </view>
+      
+      <!-- 门票价格标签 -->
+      <view class="tag price-tag" wx:if="{{museumDetail.ticketPrice}}">
+        <text class="price-icon">💰</text>
+        <text class="price-text">{{museumDetail.ticketPrice}}</text>
+      </view>
+      
+      <!-- 开放状态标签 -->
+      <view class="tag status-tag {{museumDetail.isOpen ? 'open' : 'closed'}}">
+        {{museumDetail.isOpen ? '营业中' : '已闭馆'}}
+      </view>
+      
+      <!-- 特色标签 -->
+      <view wx:for="{{museumDetail.tags}}" wx:key="*this" class="tag feature-tag">
+        {{item}}
+      </view>
+    </view>
+
+    <!-- 博物馆统计信息 -->
+    <view class="stats-section">
+      <view class="stats-grid">
+        <view class="stat-item">
+          <text class="stat-number">{{formatNumber(museumDetail.collectionCount)}}</text>
+          <text class="stat-label">馆藏文物</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-number">{{formatNumber(museumDetail.visitorCount)}}</text>
+          <text class="stat-label">年访客量</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-number">{{formatNumber(museumDetail.exhibitions)}}</text>
+          <text class="stat-label">展览数量</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-number">{{formatNumber(museumDetail.educationActivities)}}</text>
+          <text class="stat-label">教育活动</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+
+  <!-- 博物馆介绍 -->
+  <view class="description-section">
+    <view class="section-title">博物馆介绍</view>
+    <view class="description-content">
+      <text class="description-text {{showFullDesc ? 'full-text' : 'ellipsis-text'}}">{{museumDetail.description}}</text>
+      <text class="toggle-btn" bindtap="onToggleDesc">{{showFullDesc ? '收起' : '展开'}}</text>
+    </view>
+  </view>
+
+  <!-- 当前展览 -->
+  <view class="exhibition-section" wx:if="{{exhibitions.length > 0}}">
+    <view class="section-title">当前展览</view>
+    <view class="exhibition-list">
+      <view class="exhibition-item" wx:for="{{exhibitions}}" wx:key="id" bindtap="onExhibitionTap" data-id="{{item.id}}">
+        <image src="{{item.image}}" mode="aspectFill" class="exhibition-image" />
+        <view class="exhibition-info">
+          <view class="exhibition-title">{{item.title}}</view>
+          <view class="exhibition-date">{{item.startDate}} - {{item.endDate}}</view>
+          <view class="exhibition-status {{item.status === '进行中' ? 'status-active' : 'status-upcoming'}}">
+            {{item.status}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 门票信息 -->
+  <view class="ticket-section" wx:if="{{museumDetail.ticketDescription}}">
+    <view class="section-title">门票信息</view>
+    <view class="ticket-content">
+      <text class="ticket-description">{{museumDetail.ticketDescription}}</text>
+    </view>
+  </view>
+
+  <!-- 参观须知 -->
+  <view class="notice-section">
+    <view class="section-title">参观须知</view>
+    <view class="notice-list">
+      <view class="notice-item">
+        <text class="notice-icon">🎫</text>
+        <text class="notice-text">请提前预约，携带有效身份证件</text>
+      </view>
+      <view class="notice-item">
+        <text class="notice-icon">📷</text>
+        <text class="notice-text">部分展厅禁止拍照，请遵守相关规定</text>
+      </view>
+      <view class="notice-item">
+        <text class="notice-icon">🔇</text>
+        <text class="notice-text">参观时请保持安静，勿大声喧哗</text>
+      </view>
+      <view class="notice-item">
+        <text class="notice-icon">👶</text>
+        <text class="notice-text">儿童需在成人陪同下参观</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 联系方式 -->
+  <view class="contact-section">
+    <view class="section-title">联系方式</view>
+    <view class="contact-list">
+      <view class="contact-item" bindtap="onPhone">
+        <icon type="phone" size="16" color="#ff8fa3"></icon>
+        <text class="contact-text phone-number">{{museumDetail.phone || '400-123-4567'}}</text>
+      </view>
+      <view class="contact-item" wx:if="{{museumDetail.website}}" bindtap="onWebsite">
+        <icon type="link" size="16" color="#ff8fa3"></icon>
+        <text class="contact-text website-link">官方网站</text>
+      </view>
+    </view>
+  </view>
+
+    <!-- 底部间距 -->
+    <view class="bottom-spacing"></view>
+  </view>
+</view>

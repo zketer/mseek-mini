@@ -1,0 +1,571 @@
+/**checkin.wxss**/
+page {
+  background-color: #f5f5f5;
+}
+
+.page-container {
+  min-height: 100vh;
+}
+
+/* 定位状态栏 */
+.location-status {
+  background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+  padding: 20rpx 32rpx;
+}
+
+.status-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 60rpx;
+  padding: 20rpx 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.location-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.location-icon {
+  margin-right: 12rpx;
+}
+
+.current-location {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.refresh-btn {
+  padding: 8rpx;
+}
+
+/* 未实现功能提示 */
+.unimplemented-notice {
+  margin: 30rpx 32rpx;
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  border-left: 8rpx solid #2196f3;
+}
+
+.notice-content {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.notice-icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 20rpx;
+}
+
+.notice-text {
+  flex: 1;
+}
+
+.notice-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1976d2;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.notice-desc {
+  font-size: 24rpx;
+  color: #1976d2;
+  opacity: 0.8;
+}
+
+.notice-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.action-btn {
+  background: #2196f3;
+  color: white;
+  padding: 16rpx 32rpx;
+  border-radius: 40rpx;
+  font-size: 24rpx;
+  text-align: center;
+  min-width: 120rpx;
+}
+
+/* 区域通用样式 */
+.section-header {
+  margin-bottom: 24rpx;
+}
+
+.section-header-simple {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24rpx;
+}
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+
+.section-more {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 距离选择器 */
+.distance-selector {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.distance-label {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.distance-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.distance-tab {
+  padding: 8rpx 16rpx;
+  font-size: 24rpx;
+  color: #999;
+  background: #f8f8f8;
+  border: none;
+  border-radius: 14rpx;
+  transition: all 0.2s ease;
+  min-width: 44rpx;
+  text-align: center;
+}
+
+.distance-tab.tab-active {
+  background: #4ecdc4;
+  color: white;
+  font-weight: 500;
+}
+
+.distance-tab:not(.tab-active):active {
+  background: #e8e8e8;
+  transform: scale(0.95);
+}
+
+.distance-unit {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 暂存卡片 */
+.draft-card {
+  margin: 0 32rpx 32rpx;
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  border-radius: 20rpx;
+  padding: 32rpx;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  box-shadow: 0 8rpx 24rpx rgba(240, 147, 251, 0.2);
+  transition: all 0.3s ease;
+}
+
+.draft-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 12rpx rgba(240, 147, 251, 0.15);
+}
+
+.draft-icon {
+  font-size: 48rpx;
+  width: 80rpx;
+  height: 80rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.draft-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.draft-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: white;
+  line-height: 1.2;
+}
+
+.draft-desc {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.3;
+}
+
+.draft-arrow {
+  font-size: 32rpx;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* 附近博物馆 */
+.nearby-section {
+  margin: 0 32rpx 40rpx;
+}
+
+.nearby-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.nearby-item {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.nearby-image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 16rpx;
+  margin-right: 20rpx;
+}
+
+.nearby-info {
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.nearby-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.nearby-distance {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.distance-text {
+  font-size: 22rpx;
+  color: #999;
+  margin-left: 8rpx;
+}
+
+.nearby-status {
+  display: flex;
+  align-items: center;
+}
+
+.status-dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  margin-right: 8rpx;
+}
+
+.status-available {
+  background: #4ecdc4;
+}
+
+.status-unavailable {
+  background: #ffab91;
+}
+
+.status-text {
+  font-size: 22rpx;
+  color: #666;
+}
+
+.checkin-action {
+  flex-shrink: 0;
+}
+
+.checkin-btn {
+  padding: 16rpx 32rpx;
+  border-radius: 40rpx;
+  font-size: 24rpx;
+  text-align: center;
+  min-width: 120rpx;
+}
+
+.btn-active {
+  background: linear-gradient(135deg, #4ecdc4, #44a08d);
+  color: white;
+}
+
+.btn-disabled {
+  background: #f0f0f0;
+  color: #999;
+}
+
+/* 打卡记录 */
+.history-section {
+  margin: 0 32rpx 40rpx;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.history-item {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.05);
+}
+
+.history-image {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 12rpx;
+  margin-right: 16rpx;
+}
+
+.history-info {
+  flex: 1;
+}
+
+.history-name {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6rpx;
+}
+
+.history-time {
+  font-size: 22rpx;
+  color: #999;
+  margin-bottom: 6rpx;
+}
+
+.history-points {
+  font-size: 22rpx;
+  color: #ff8fa3;
+  font-weight: 500;
+}
+
+.empty-history {
+  text-align: center;
+  padding: 60rpx 0;
+  background: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.empty-icon {
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.3;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 打卡成就 */
+.achievement-section {
+  margin: 24rpx 32rpx 32rpx;
+}
+
+.achievement-stats {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  display: flex;
+  justify-content: space-around;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-number {
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #ff8fa3;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 打卡卡片 */
+.checkin-card {
+  margin: 24rpx 32rpx 32rpx;
+  background: linear-gradient(135deg, #ffb3b3, #ffd1d1);
+  border-radius: 20rpx;
+  padding: 32rpx;
+  box-shadow: 0 8rpx 24rpx rgba(102, 126, 234, 0.2);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.location-info {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  flex: 1;
+}
+
+.location-icon {
+  font-size: 28rpx;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.current-location {
+  font-size: 26rpx;
+  color: white;
+  font-weight: 500;
+  line-height: 1;
+  flex: 1;
+}
+
+.refresh-btn {
+  margin-left: 12rpx;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.refresh-btn:active {
+  transform: scale(0.9);
+}
+
+.refresh-icon {
+  width: 24rpx;
+  height: 24rpx;
+  filter: brightness(0) invert(1);
+}
+
+.card-content {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 24rpx;
+}
+
+.museum-image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 16rpx;
+  flex-shrink: 0;
+}
+
+.museum-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8rpx;
+}
+
+.museum-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: white;
+  line-height: 1.2;
+}
+
+.museum-distance {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+}
+
+.museum-status {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.card-actions {
+  margin-top: 8rpx;
+}
+
+.checkin-main-btn {
+  width: 100%;
+  height: 88rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.checkin-main-btn.btn-enabled {
+  background: white;
+  color: #ff8fa3;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
+}
+
+.checkin-main-btn.btn-enabled:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.checkin-main-btn.btn-disabled {
+  background: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 底部间距 */
+.bottom-spacing {
+  height: 40rpx;
+}

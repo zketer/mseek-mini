@@ -1,0 +1,163 @@
+<!--exhibition/detail.wxml-->
+<view class="page-container">
+  <view wx:if="{{loading}}" class="loading-container">
+    <view class="loading-content">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+  </view>
+
+  <view wx:elif="{{error}}" class="error-container">
+    <view class="error-content">
+      <image src="/images/Icon1.png" class="error-icon" mode="aspectFit" />
+      <text class="error-text">{{error}}</text>
+      <button class="retry-btn" bindtap="loadExhibitionDetail">重新加载</button>
+    </view>
+  </view>
+
+  <view wx:elif="{{exhibitionDetail}}" class="main-content">
+  <!-- 图片轮播 -->
+  <view class="image-section">
+    <swiper class="image-swiper" autoplay="{{true}}" interval="4000" duration="500" circular="{{true}}" indicator-dots="{{true}}" indicator-color="rgba(255,255,255,0.5)" indicator-active-color="#fff">
+      <swiper-item wx:for="{{exhibitionDetail.images}}" wx:key="*this">
+        <image src="{{item}}" mode="aspectFill" class="detail-image" bindtap="onImagePreview" data-url="{{item}}" />
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <!-- 展览信息 -->
+  <view class="info-section">
+    <view class="exhibition-header">
+      <view class="title-with-actions">
+        <view class="exhibition-title">{{exhibitionDetail.title}}</view>
+        <view class="header-actions">
+          <view class="header-btn" bindtap="onFavorite">
+            <image wx:if="{{exhibitionDetail.isFavorited}}" src="/images/favorite.svg" class="svg-icon favorite-icon" mode="aspectFit" />
+            <image wx:else src="/images/favorite.svg" class="svg-icon favorite-icon-outline" mode="aspectFit" />
+          </view>
+        </view>
+      </view>
+      <view class="exhibition-museum">
+        <text class="museum-name" bindtap="onNavigateToMuseum">{{exhibitionDetail.museumName}}</text>
+        <text class="museum-arrow">›</text>
+      </view>
+      <view class="exhibition-rating" wx:if="{{exhibitionDetail.rating}}">
+        <text class="rating-score">{{exhibitionDetail.rating}}</text>
+        <text class="rating-total">/5.0 ({{exhibitionDetail.reviewCount}}条评价)</text>
+      </view>
+    </view>
+
+    <view class="exhibition-meta">
+      <view class="meta-item">
+        <icon type="clock" size="14" color="#999"></icon>
+        <text class="meta-text">{{exhibitionDetail.startDate}} - {{exhibitionDetail.endDate}}</text>
+      </view>
+      <view class="meta-item" wx:if="{{exhibitionDetail.location}}">
+        <icon type="locationfill" size="14" color="#999"></icon>
+        <text class="meta-text">{{exhibitionDetail.location}}</text>
+      </view>
+      <view class="meta-item" wx:if="{{exhibitionDetail.freeAdmission}}">
+        <icon type="money" size="14" color="#4CAF50"></icon>
+        <text class="meta-text free-admission">免费参观</text>
+      </view>
+      <view class="meta-item" wx:elif="{{exhibitionDetail.ticketPrice}}">
+        <icon type="money" size="14" color="#999"></icon>
+        <text class="meta-text">¥{{exhibitionDetail.ticketPrice}}/人</text>
+      </view>
+      <view class="meta-item" wx:if="{{exhibitionDetail.isPermanent}}">
+        <icon type="star" size="14" color="#FFD700"></icon>
+        <text class="meta-text">常设展览</text>
+      </view>
+    </view>
+
+    <!-- 展览标签 -->
+    <view class="exhibition-tags" wx:if="{{exhibitionDetail.tags && exhibitionDetail.tags.length > 0}}">
+      <!-- 评分标签 -->
+      <view class="tag rating-tag" wx:if="{{exhibitionDetail.rating}}">
+        <text class="rating-score-tag">{{exhibitionDetail.rating}}</text>
+        <text class="rating-star">★</text>
+      </view>
+      
+      <!-- 门票价格标签 -->
+      <view class="tag price-tag" wx:if="{{exhibitionDetail.ticketPrice}}">
+        <text class="price-icon">💰</text>
+        <text class="price-text">¥{{exhibitionDetail.ticketPrice}}</text>
+      </view>
+      
+      <!-- 展览类型标签 -->
+      <view class="tag type-tag {{exhibitionDetail.isPermanent ? 'permanent' : 'temporary'}}">
+        {{exhibitionDetail.isPermanent ? '常设' : '临展'}}
+      </view>
+      
+      <!-- 特色标签 -->
+      <view wx:for="{{exhibitionDetail.tags}}" wx:key="*this" class="tag feature-tag">
+        {{item}}
+      </view>
+    </view>
+
+    <!-- 展览统计信息 -->
+    <view class="stats-section" wx:if="{{exhibitionDetail.visitCount}}">
+      <view class="stats-grid">
+        <view class="stat-item">
+          <text class="stat-number">{{formatNumber(exhibitionDetail.visitCount)}}</text>
+          <text class="stat-label">参观人数</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-number">{{exhibitionDetail.reviewCount || 0}}</text>
+          <text class="stat-label">评价数量</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 展览介绍 -->
+  <view class="description-section">
+    <view class="section-title">展览介绍</view>
+    <view class="description-content">
+      <text class="description-text {{showFullDesc ? 'full-text' : 'ellipsis-text'}}">{{exhibitionDetail.description}}</text>
+      <text class="toggle-btn" bindtap="onToggleDesc">{{showFullDesc ? '收起' : '展开'}}</text>
+    </view>
+  </view>
+
+  <!-- 参观须知 -->
+  <view class="notice-section">
+    <view class="section-title">参观须知</view>
+    <view class="notice-list">
+      <view class="notice-item">
+        <text class="notice-icon">🎫</text>
+        <text class="notice-text">请按展览时间安排参观，部分展品可能调整</text>
+      </view>
+      <view class="notice-item">
+        <text class="notice-icon">📷</text>
+        <text class="notice-text">部分展品禁止拍照，请遵守相关规定</text>
+      </view>
+      <view class="notice-item">
+        <text class="notice-icon">🔇</text>
+        <text class="notice-text">参观时请保持安静，勿大声喧哗</text>
+      </view>
+      <view class="notice-item">
+        <text class="notice-icon">👶</text>
+        <text class="notice-text">儿童需在成人陪同下参观</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 联系方式 -->
+  <view class="contact-section" wx:if="{{exhibitionDetail.contactPhone || exhibitionDetail.website}}">
+    <view class="section-title">联系方式</view>
+    <view class="contact-list">
+      <view class="contact-item" wx:if="{{exhibitionDetail.contactPhone}}" bindtap="onPhone">
+        <icon type="phone" size="16" color="#ff8fa3"></icon>
+        <text class="contact-text phone-number">{{exhibitionDetail.contactPhone}}</text>
+      </view>
+      <view class="contact-item" wx:if="{{exhibitionDetail.website}}" bindtap="onWebsite">
+        <icon type="link" size="16" color="#ff8fa3"></icon>
+        <text class="contact-text website-link">官方网站</text>
+      </view>
+    </view>
+  </view>
+
+    <!-- 底部间距 -->
+    <view class="bottom-spacing"></view>
+  </view>
+</view>

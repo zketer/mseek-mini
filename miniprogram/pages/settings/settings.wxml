@@ -1,0 +1,68 @@
+<!--settings.wxml-->
+<scroll-view class="scrollarea" scroll-y type="list">
+  <!-- 设置分组 -->
+  <view class="settings-container">
+    <view class="setting-group" wx:for="{{settingGroups}}" wx:key="title" wx:for-item="group" wx:for-index="groupIndex">
+      <!-- 分组标题 -->
+      <view class="group-header">
+        <text class="group-title">{{group.title}}</text>
+      </view>
+      
+      <!-- 设置项列表 -->
+      <view class="setting-list">
+        <view 
+          class="setting-item" 
+          wx:for="{{group.items}}" 
+          wx:key="id" 
+          wx:for-item="item" 
+          wx:for-index="itemIndex"
+          bindtap="onSettingTap"
+          data-group-index="{{groupIndex}}"
+          data-item-index="{{itemIndex}}"
+        >
+          <view class="setting-content">
+            <view class="setting-main">
+              <view class="setting-icon">
+                <icon type="{{item.icon}}" size="16" color="{{item.type === 'action' ? '#ff8fa3' : '#666'}}"></icon>
+              </view>
+              <view class="setting-info">
+                <text class="setting-title">{{item.title}}</text>
+                <text class="setting-description" wx:if="{{item.description}}">{{item.description}}</text>
+              </view>
+            </view>
+            
+            <!-- 开关类型 -->
+            <view class="setting-control" wx:if="{{item.type === 'switch'}}">
+              <switch 
+                checked="{{item.value}}" 
+                color="#ff8fa3"
+                bindchange="onSettingTap"
+                data-group-index="{{groupIndex}}"
+                data-item-index="{{itemIndex}}"
+              />
+            </view>
+            
+            <!-- 导航类型 -->
+            <view class="setting-control" wx:if="{{item.type === 'navigation'}}">
+              <icon type="arrow" size="12" color="#ccc"></icon>
+            </view>
+            
+            <!-- 操作类型 -->
+            <view class="setting-control" wx:if="{{item.type === 'action'}}">
+              <icon type="arrow" size="12" color="#ff8fa3"></icon>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="version-info">
+    <text class="version-text">文博探索 v0.0.1</text>
+    <text class="copyright-text">© 2024 文博探索团队</text>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="bottom-spacing"></view>
+</scroll-view>

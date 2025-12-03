@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "搜索博物馆", 
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#f5f5f5",
+  "usingComponents": {}
+}

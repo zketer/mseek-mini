@@ -1,0 +1,167 @@
+<!--discovery.wxml-->
+<view class="page-container">
+  <!-- 搜索栏 -->
+  <view class="search-container">
+    <view class="search-box">
+      <icon class="search-icon" type="search" size="18" color="#999"></icon>
+      <input 
+        class="search-input" 
+        placeholder="搜索博物馆名称..." 
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+        bindconfirm="onSearchConfirm"
+      />
+    </view>
+  </view>
+
+  <!-- 分类标签栏 -->
+  <view class="category-tabs">
+    <!-- 滚动区域 -->
+    <view class="tabs-scroll-area">
+      <scroll-view 
+        class="tabs-scroll" 
+        scroll-x="{{true}}" 
+        show-scrollbar="{{false}}"
+        enhanced="{{true}}"
+        bounces="{{false}}"
+      >
+        <view class="tabs-container">
+          <view 
+            class="tab-item {{activeCategory === 0 ? 'active' : ''}}" 
+            bindtap="onCategoryTap" 
+            data-category="0"
+          >
+            全部
+          </view>
+          <view 
+            wx:for="{{categories}}" 
+            wx:key="id" 
+            class="tab-item {{activeCategory === item.id ? 'active' : ''}}" 
+            bindtap="onCategoryTap" 
+            data-category="{{item.id}}"
+          >
+            {{item.name}}
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    
+    <!-- 筛选按钮区域 -->
+    <view class="filter-area">
+      <view class="filter-tab" bindtap="onFilterTap">
+        <text class="filter-text">筛选</text>
+        <view class="arrow-down"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 博物馆列表 -->
+  <view class="museum-list">
+    <view class="list-header" wx:if="{{museums.length > 0}}">
+      <text class="list-count">共找到 {{total}} 家博物馆</text>
+    </view>
+    
+    <view class="museum-item" wx:for="{{museums}}" wx:key="id" bindtap="onMuseumTap" data-id="{{item.id}}">
+      <image src="{{item.image || '/images/default-museum.png'}}" mode="aspectFill" class="museum-image" />
+      <view class="museum-info">
+        <view class="museum-name">{{item.name}}</view>
+        <view class="museum-location">
+          <icon type="locationfill" size="12" color="#999"></icon>
+          <text class="location-text">{{item.address || item.cityName}}</text>
+        </view>
+        <view class="museum-meta">
+          <text class="collection-count" wx:if="{{item.collectionCount}}">藏品: {{item.collectionCount}}件</text>
+        </view>
+        <view class="museum-tags" wx:if="{{item.tags && item.tags.length > 0}}">
+          <view wx:for="{{item.tags}}" wx:key="id" wx:for-item="tag" class="tag" style="background-color: {{tag.color || '#f0f8ff'}};">
+            {{tag.name}}
+          </view>
+        </view>
+        <view class="museum-description" wx:if="{{item.description}}">
+          {{item.description}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-container" wx:if="{{!loading && museums.length === 0}}">
+    <text class="empty-text">暂无博物馆数据</text>
+    <view class="empty-button" bindtap="onRefresh">重新加载</view>
+  </view>
+
+  <!-- 没有更多数据 -->
+  <view class="no-more-container" wx:if="{{!loading && museums.length > 0 && !hasMore}}">
+    <text class="no-more-text">没有更多数据了</text>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="bottom-spacing"></view>
+</view>
+
+<!-- 筛选弹窗 -->
+<view class="filter-modal {{showFilterModal ? 'show' : ''}}" bindtap="onFilterModalClose">
+  <view class="filter-content" catchtap="onFilterContentTap">
+    <view class="filter-header">
+      <text class="filter-title">筛选条件</text>
+      <view class="filter-close" bindtap="onFilterModalClose">
+        <icon type="close" size="20" color="#666"></icon>
+      </view>
+    </view>
+    
+    <!-- 分类筛选 -->
+    <view class="filter-section">
+      <text class="filter-section-title">博物馆分类</text>
+      <view class="filter-options">
+        <view 
+          class="filter-option {{filterCategory === 0 ? 'active' : ''}}"
+          bindtap="onFilterCategoryTap"
+          data-category="0"
+        >
+          全部
+        </view>
+        <view 
+          wx:for="{{categories}}" 
+          wx:key="id"
+          class="filter-option {{filterCategory === item.id ? 'active' : ''}}"
+          bindtap="onFilterCategoryTap"
+          data-category="{{item.id}}"
+        >
+          {{item.name}}
+        </view>
+      </view>
+    </view>
+    
+    <!-- 排序方式 -->
+    <view class="filter-section">
+      <text class="filter-section-title">排序方式</text>
+      <view class="filter-options">
+        <view 
+          class="filter-option {{filterSort === 'hot' ? 'active' : ''}}"
+          bindtap="onFilterSortTap"
+          data-sort="hot"
+        >
+          人气最高
+        </view>
+        <view 
+          class="filter-option {{filterSort === 'collection' ? 'active' : ''}}"
+          bindtap="onFilterSortTap"
+          data-sort="collection"
+        >
+          藏品最多
+        </view>
+      </view>
+    </view>
+    
+    <!-- 操作按钮 -->
+    <view class="filter-actions">
+      <view class="filter-reset" bindtap="onFilterReset">重置</view>
+      <view class="filter-confirm" bindtap="onFilterConfirm">确定</view>
+    </view>
+  </view>
+</view>

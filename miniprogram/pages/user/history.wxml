@@ -1,0 +1,249 @@
+<!--user/history.wxml-->
+<view class="page-container">
+  <!-- 历史概览 -->
+  <view class="history-header">
+    <view class="header-content">
+      <!-- 列表模式统计 -->
+      <view class="stats-overview" wx:if="{{viewMode === 'list'}}">
+        <view class="stat-item">
+          <text class="stat-number">{{totalCheckins}}</text>
+          <text class="stat-label">总打卡</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-number">{{unlockedProvinces}}</text>
+          <text class="stat-label">省份</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-number">{{thisMonthCheckins}}</text>
+          <text class="stat-label">本月</text>
+        </view>
+      </view>
+
+      <!-- 地图模式统计 -->
+      <view class="stats-overview" wx:if="{{viewMode === 'map'}}">
+        <view class="stat-item">
+          <text class="stat-number">{{unlockedProvinces}}/{{totalProvinces}}</text>
+          <text class="stat-label">省份</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-number">{{visitedNationalMuseums}}/{{totalNationalMuseums}}</text>
+          <text class="stat-label">博物馆</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-number">{{coverageRate}}%</text>
+          <text class="stat-label">覆盖率</text>
+        </view>
+      </view>
+      
+      <view class="progress-bar">
+        <view 
+          class="progress-fill" 
+          style="width: {{coverageRate}}%"
+        ></view>
+      </view>
+      
+      <view class="header-actions">
+        <view class="view-mode-tabs">
+          <view 
+            class="mode-tab {{viewMode === 'list' ? 'active' : ''}}"
+            bindtap="onViewModeChange"
+            data-mode="list"
+          >
+            <text class="mode-text">打卡记录</text>
+          </view>
+          <view 
+            class="mode-tab {{viewMode === 'map' ? 'active' : ''}}"
+            bindtap="onViewModeChange"
+            data-mode="map"
+          >
+            <text class="mode-text">足迹地图</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 打卡记录视图 -->
+  <view wx:if="{{viewMode === 'list'}}">
+    <!-- 搜索框 -->
+    <view class="search-section">
+      <view class="search-container">
+        <input 
+          class="search-input"
+          type="text"
+          placeholder="搜索博物馆、省市..."
+          value="{{searchKeyword}}"
+          bindinput="onSearchInput"
+          bindconfirm="onSearchConfirm"
+        />
+        <view class="search-btn" bindtap="onSearchConfirm">
+          <text class="search-icon">🔍</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 筛选和排序 -->
+    <view class="filter-section">
+      <!-- 时间筛选 -->
+      <view class="filter-tabs">
+        <view 
+          class="filter-tab {{filterType === 'all' ? 'active' : ''}}"
+          bindtap="onFilterTap"
+          data-type="all"
+        >
+          <text class="tab-text">全部</text>
+        </view>
+        <view 
+          class="filter-tab {{filterType === 'thisMonth' ? 'active' : ''}}"
+          bindtap="onFilterTap"
+          data-type="thisMonth"
+        >
+          <text class="tab-text">本月</text>
+        </view>
+        <view 
+          class="filter-tab {{filterType === 'thisYear' ? 'active' : ''}}"
+          bindtap="onFilterTap"
+          data-type="thisYear"
+        >
+          <text class="tab-text">今年</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加载状态 -->
+    <view class="loading-state" wx:if="{{loading}}">
+      <text class="loading-text">搜索中...</text>
+    </view>
+
+    <!-- 打卡记录列表 -->
+    <view class="records-section" wx:if="{{!loading}}">
+      <view class="records-list">
+        <view 
+          class="record-card"
+          wx:for="{{checkinRecords}}" 
+          wx:key="id"
+          bindtap="onRecordTap"
+          data-id="{{item.id}}"
+        >
+          <!-- 博物馆信息 -->
+          <view class="record-main">
+            <view class="museum-info">
+              <view class="museum-header">
+                <text class="museum-name">{{item.museumName}}</text>
+                <view 
+                  class="delete-btn"
+                  catchtap="onDeleteRecord"
+                  data-id="{{item.id}}"
+                  data-name="{{item.museumName}}"
+                >
+                  <image class="delete-icon" src="/images/delete.svg" mode="aspectFit" />
+                </view>
+              </view>
+              <text class="museum-location">{{item.provinceName}} · {{item.cityName}}</text>
+              <view class="address-row">
+                <text class="museum-address">{{item.address}}</text>
+                <text class="checkin-date">{{item.checkInDate}}</text>
+              </view>
+            </view>
+          </view>
+          
+          <!-- 打卡照片 -->
+          <view class="record-photos" wx:if="{{item.photos && item.photos.length > 0}}">
+            <image 
+              src="{{item.photos[0]}}" 
+              class="photo-thumbnail"
+              mode="aspectFill"
+            />
+            <view class="photo-count" wx:if="{{item.photos.length > 1}}">
+              <text class="count-text">+{{item.photos.length - 1}}</text>
+            </view>
+          </view>
+          
+          <!-- 打卡笔记 -->
+          <view class="record-notes" wx:if="{{item.notes}}">
+            <text class="notes-text">{{item.notes}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 足迹地图视图 -->
+  <view wx:if="{{viewMode === 'map'}}">
+    <!-- 省份地图 -->
+    <view class="map-section">
+      <view class="map-header">
+        <text class="map-title">我的足迹地图</text>
+        <text class="map-subtitle">点击查看省份详情</text>
+      </view>
+      
+      <view class="province-grid">
+        <view 
+          class="province-card {{item.isUnlocked ? 'unlocked' : 'locked'}}"
+          wx:for="{{provinceData}}" 
+          wx:key="provinceCode"
+          bindtap="onProvinceTap"
+          data-code="{{item.provinceCode}}"
+        >
+          <!-- 省份图标 -->
+          <view class="province-icon">
+            <text class="province-emoji">{{item.isUnlocked ? '🏛️' : '🔒'}}</text>
+          </view>
+          
+          <!-- 省份信息 -->
+          <view class="province-info">
+            <text class="province-name">{{item.provinceName}}</text>
+            <text class="province-stats" wx:if="{{item.isUnlocked}}">
+              {{item.visitedMuseums}}/{{item.totalMuseums}}
+            </text>
+            <text class="province-locked" wx:if="{{!item.isUnlocked}}">
+              未解锁
+            </text>
+          </view>
+          
+          <!-- 完成度指示器 -->
+          <view class="completion-indicator" wx:if="{{item.isUnlocked}}">
+            <view class="completion-bar">
+              <view 
+                class="completion-fill" 
+                style="width: {{item.visitedMuseums && item.totalMuseums ? (item.visitedMuseums/item.totalMuseums)*100 : 0}}%"
+              ></view>
+            </view>
+            <text class="completion-text">{{item.visitedMuseums && item.totalMuseums ? Math.round((item.visitedMuseums/item.totalMuseums)*100) : 0}}</text>
+          </view>
+          
+          <!-- 解锁标识 -->
+          <view class="unlock-badge" wx:if="{{item.isUnlocked && item.visitedMuseums > 0}}">
+            <text class="badge-text">✨</text>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 地图说明 -->
+      <view class="map-legend">
+        <view class="legend-item">
+          <view class="legend-color unlocked"></view>
+          <text class="legend-text">已探索省份</text>
+        </view>
+        <view class="legend-item">
+          <view class="legend-color locked"></view>
+          <text class="legend-text">未探索省份</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{checkinRecords.length === 0 && viewMode === 'list' && !loading}}">
+    <image src="/images/empty-history.png" class="empty-icon" mode="aspectFit" />
+    <text class="empty-text">暂无打卡记录</text>
+    <text class="empty-subtitle">快去探索博物馆吧！</text>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="bottom-spacing"></view>
+</view>

@@ -1,0 +1,165 @@
+<!--checkin-action.wxml-->
+<scroll-view class="checkin-action-container" scroll-y>
+  <!-- 博物馆信息卡片 -->
+  <view class="museum-info-card">
+    <view class="museum-header">
+      <view class="museum-basic-info">
+        <text class="museum-name">{{museumInfo.name}}</text>
+        <view class="museum-location">
+          <icon type="locationfill" size="12" color="#999"></icon>
+          <text class="location-text">{{museumInfo.address}}</text>
+        </view>
+        <view class="museum-distance">
+          <text class="distance-text">距离您 {{museumInfo.distance}}</text>
+          <view class="status-dot {{museumInfo.canCheckin ? 'status-available' : 'status-unavailable'}}"></view>
+          <text class="status-text">{{museumInfo.canCheckin ? '可打卡' : '距离过远'}}</text>
+        </view>
+      </view>
+      <image src="{{museumInfo.image}}" mode="aspectFill" class="museum-thumb" />
+    </view>
+  </view>
+
+  <!-- 打卡照片 -->
+  <view class="section-card">
+    <view class="section-header">
+      <text class="section-title">打卡照片</text>
+      <text class="photo-count" wx:if="{{photos.length > 0}}">({{photos.length}}张)</text>
+    </view>
+    
+    <view class="photo-grid" wx:if="{{photos.length > 0}}">
+      <view class="photo-item" wx:for="{{photos}}" wx:key="index">
+        <image src="{{item}}" mode="aspectFill" class="photo-image" bindtap="onPreviewPhoto" data-index="{{index}}" />
+        <view class="photo-delete" bindtap="onDeletePhoto" data-index="{{index}}">×</view>
+      </view>
+      <view class="add-photo-btn" wx:if="{{photos.length < 9}}" bindtap="onAddPhoto">
+        <text class="add-icon">+</text>
+      </view>
+    </view>
+
+    <view class="empty-photo" wx:else>
+      <view class="empty-icon">📷</view>
+      <text class="empty-text">还没有添加照片哦</text>
+      <view class="take-photo-btn" bindtap="onAddPhoto">
+        <text class="btn-text">添加照片</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 打卡感受 -->
+  <view class="section-card">
+    <text class="section-title">打卡感受<text class="required-star">*</text></text>
+    <textarea 
+      class="feeling-input" 
+      placeholder="分享您的参观感受..." 
+      value="{{feeling}}"
+      bindinput="onFeelingInput"
+      maxlength="500"
+      show-confirm-bar="{{false}}"
+    />
+    <text class="input-count">{{feeling.length}}/500</text>
+  </view>
+
+  <!-- 评分、心情、天气 -->
+  <view class="section-card">
+    <!-- 评分 -->
+    <view class="rating-section">
+      <text class="section-title">评分<text class="required-star">*</text></text>
+      <view class="star-rating">
+        <view class="star-item {{rating === item.value ? 'star-selected' : ''}}" 
+              wx:for="{{ratingOptions}}" 
+              wx:key="value"
+              bindtap="onRatingTap" 
+              data-rating="{{item.value}}">
+          <text class="star-icon">{{rating === item.value ? '★' : '☆'}}</text>
+          <text class="star-text">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 心情 -->
+    <view class="mood-section">
+      <text class="section-title">心情<text class="required-star">*</text></text>
+      <view class="mood-options">
+        <view class="mood-item {{selectedMood === item.value ? 'mood-selected' : ''}}" 
+              wx:for="{{moodOptions}}" 
+              wx:key="value"
+              bindtap="onMoodSelect" 
+              data-mood="{{item.value}}">
+          <text class="mood-emoji">{{item.emoji}}</text>
+          <text class="mood-text">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 天气 -->
+    <view class="weather-section">
+      <text class="section-title">天气<text class="required-star">*</text></text>
+      <view class="weather-options">
+        <view class="weather-item {{selectedWeather === item.value ? 'weather-selected' : ''}}" 
+              wx:for="{{weatherOptions}}" 
+              wx:key="value"
+              bindtap="onWeatherSelect" 
+              data-weather="{{item.value}}">
+          <text class="weather-emoji">{{item.emoji}}</text>
+          <text class="weather-text">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 同行伙伴 -->
+  <view class="section-card">
+    <text class="section-title">同行伙伴</text>
+    <view class="companion-input">
+      <input 
+        class="companion-field" 
+        placeholder="添加同行伙伴" 
+        value="{{companionInput}}"
+        bindinput="onCompanionInput"
+        bindconfirm="onAddCompanion"
+      />
+      <view class="add-companion-btn" bindtap="onAddCompanion">添加</view>
+    </view>
+    <view class="companion-list" wx:if="{{companions.length > 0}}">
+      <view class="companion-tag" wx:for="{{companions}}" wx:key="index">
+        <text class="companion-name">{{item}}</text>
+        <text class="companion-delete" bindtap="onDeleteCompanion" data-index="{{index}}">×</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 标签 -->
+  <view class="section-card">
+    <text class="section-title">标签</text>
+    <view class="tag-input">
+      <input 
+        class="tag-field" 
+        placeholder="添加标签" 
+        value="{{tagInput}}"
+        bindinput="onTagInput"
+        bindconfirm="onAddTag"
+      />
+      <view class="add-tag-btn" bindtap="onAddTag">添加</view>
+    </view>
+    <view class="tag-list" wx:if="{{tags.length > 0}}">
+      <view class="tag-item" wx:for="{{tags}}" wx:key="index">
+        <text class="tag-text">#{{item}}</text>
+        <text class="tag-delete" bindtap="onDeleteTag" data-index="{{index}}">×</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="action-buttons">
+    <view class="save-draft-btn" bindtap="onSaveDraft">
+      暂存
+    </view>
+    <view class="checkin-btn {{canSubmitCheckin ? 'btn-enabled' : 'btn-disabled'}}" 
+          bindtap="onSubmitCheckin">
+      {{museumInfo.canCheckin ? (canSubmitCheckin ? '打卡' : '请完善必填信息') : '无法打卡'}}
+    </view>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="bottom-spacing"></view>
+</scroll-view>

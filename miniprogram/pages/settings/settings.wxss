@@ -1,0 +1,210 @@
+/* settings.wxss */
+page {
+  background-color: #f5f5f5;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollarea {
+  flex: 1;
+  overflow-y: scroll;
+}
+
+/* 设置容器 */
+.settings-container {
+  padding: 40rpx 32rpx;
+}
+
+/* 设置分组 */
+.setting-group {
+  margin-bottom: 40rpx;
+}
+
+.setting-group:last-child {
+  margin-bottom: 0;
+}
+
+/* 分组标题 */
+.group-header {
+  margin-bottom: 20rpx;
+}
+
+.group-title {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 600;
+}
+
+/* 设置列表 */
+.setting-list {
+  background: #fff;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 设置项 */
+.setting-item {
+  border-bottom: 2rpx solid #f0f0f0;
+  transition: background-color 0.2s ease;
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-item:active {
+  background-color: #f8f8f8;
+}
+
+.setting-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32rpx;
+}
+
+.setting-main {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.setting-icon {
+  margin-right: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40rpx;
+  height: 40rpx;
+  background: #f8f8f8;
+  border-radius: 50%;
+}
+
+.setting-info {
+  flex: 1;
+}
+
+.setting-title {
+  font-size: 28rpx;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.setting-description {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.4;
+}
+
+.setting-control {
+  margin-left: 24rpx;
+  display: flex;
+  align-items: center;
+}
+
+/* 开关样式调整 */
+switch {
+  transform: scale(0.8);
+}
+
+/* 版本信息 */
+.version-info {
+  text-align: center;
+  padding: 40rpx 32rpx;
+  margin-top: 20rpx;
+}
+
+.version-text {
+  font-size: 26rpx;
+  color: #333;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.copyright-text {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 底部间距 */
+.bottom-spacing {
+  height: 40rpx;
+}
+
+/* 特殊样式 */
+.setting-item[data-type="logout"] .setting-title {
+  color: #ff8fa3;
+}
+
+.setting-item[data-type="cache"] .setting-icon {
+  background: #fff3f3;
+}
+
+.setting-item[data-type="logout"] .setting-icon {
+  background: #fff3f3;
+}
+
+/* 响应式调整 */
+@media (max-width: 375px) {
+  .settings-container {
+    padding: 32rpx 24rpx;
+  }
+  
+  .setting-content {
+    padding: 28rpx 24rpx;
+  }
+  
+  .setting-title {
+    font-size: 26rpx;
+  }
+  
+  .setting-description {
+    font-size: 22rpx;
+  }
+}
+
+/* 暗色模式支持 */
+@media (prefers-color-scheme: dark) {
+  page {
+    background-color: #1a1a1a;
+  }
+  
+  .setting-list {
+    background: #2a2a2a;
+  }
+  
+  .setting-item {
+    border-bottom-color: #3a3a3a;
+  }
+  
+  .setting-item:active {
+    background-color: #3a3a3a;
+  }
+  
+  .setting-title {
+    color: #fff;
+  }
+  
+  .setting-description {
+    color: #ccc;
+  }
+  
+  .group-title {
+    color: #fff;
+  }
+  
+  .version-text {
+    color: #fff;
+  }
+  
+  .copyright-text {
+    color: #999;
+  }
+  
+  .setting-icon {
+    background: #3a3a3a;
+  }
+}

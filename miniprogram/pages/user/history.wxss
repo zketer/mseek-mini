@@ -1,0 +1,595 @@
+/* user/history.wxss */
+page {
+  background: #f5f5f5;
+}
+
+.page-container {
+  min-height: 100vh;
+}
+
+/* 历史概览 */
+.history-header {
+  padding: 40rpx 32rpx;
+  background: linear-gradient(135deg, #ffb3b3, #ffd1d1);
+  border-radius: 16rpx;
+  margin: 20rpx 16rpx;
+  color: white;
+}
+
+.header-content {
+  text-align: center;
+}
+
+.stats-overview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 32rpx;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-number {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  opacity: 0.9;
+}
+
+.stat-divider {
+  width: 2rpx;
+  height: 60rpx;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 0 40rpx;
+}
+
+/* 进度条 */
+.progress-bar {
+  height: 8rpx;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4rpx;
+  overflow: hidden;
+  margin-bottom: 24rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: white;
+  border-radius: 4rpx;
+  transition: width 0.3s ease;
+}
+
+/* 视图模式切换 */
+.header-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 24rpx;
+}
+
+.view-mode-tabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 28rpx;
+  padding: 6rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.3);
+}
+
+.mode-tab {
+  flex: 1;
+  text-align: center;
+  padding: 12rpx 24rpx;
+  border-radius: 22rpx;
+  transition: all 0.2s ease;
+}
+
+.mode-tab.active {
+  background: white;
+}
+
+.mode-text {
+  font-size: 24rpx;
+  color: white;
+  font-weight: 500;
+}
+
+.mode-tab.active .mode-text {
+  color: #ff8fa3;
+}
+
+/* 搜索区域 */
+.search-section {
+  padding: 20rpx 32rpx 0;
+  background: #f5f5f5;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 24rpx;
+  padding: 0 20rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.search-input {
+  flex: 1;
+  height: 72rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.search-input::placeholder {
+  color: #999;
+  font-size: 28rpx;
+}
+
+.search-btn {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 16rpx;
+}
+
+.search-icon {
+  font-size: 32rpx;
+  color: #666;
+}
+
+/* 加载状态 */
+.loading-state {
+  padding: 80rpx 32rpx;
+  text-align: center;
+  background: #f5f5f5;
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 筛选和排序 */
+.filter-section {
+  padding: 16rpx 32rpx 32rpx;
+  background: #f5f5f5;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.filter-tab {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx;
+  background: white;
+  border-radius: 24rpx;
+  border: 2rpx solid #f0f0f0;
+  transition: all 0.2s ease;
+}
+
+.filter-tab.active {
+  background: #ffb3b3;
+  border-color: #ffb3b3;
+}
+
+.tab-text {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.filter-tab.active .tab-text {
+  color: white;
+}
+
+
+/* 打卡记录列表 */
+.records-section {
+  background: #f5f5f5;
+  padding: 0 32rpx 32rpx;
+}
+
+.records-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+/* 记录卡片 */
+.record-card {
+  background: white;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.record-card:active {
+  transform: translateY(-2rpx);
+  box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.15);
+}
+
+/* 博物馆头部（名称和删除按钮） */
+.museum-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+/* 删除按钮 */
+.delete-btn {
+  width: 36rpx;
+  height: 36rpx;
+  background: transparent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  padding: 8rpx;
+}
+
+.delete-btn:active {
+  background: rgba(0, 0, 0, 0.05);
+  transform: scale(0.95);
+}
+
+.delete-icon {
+  width: 20rpx;
+  height: 20rpx;
+  opacity: 0.6;
+  filter: grayscale(1);
+}
+
+/* 记录主要信息 */
+.record-main {
+  margin-bottom: 16rpx;
+}
+
+.museum-info {
+  flex: 1;
+}
+
+.museum-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.museum-location {
+  font-size: 24rpx;
+  color: #ff8fa3;
+  display: block;
+  margin-bottom: 6rpx;
+}
+
+.museum-address {
+  font-size: 22rpx;
+  color: #999;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.address-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16rpx;
+}
+
+.checkin-date {
+  font-size: 22rpx;
+  color: #666;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+}
+
+.rating-text {
+  font-size: 22rpx;
+  color: #FF9800;
+  font-weight: 600;
+}
+
+.star {
+  font-size: 20rpx;
+}
+
+/* 打卡照片 */
+.record-photos {
+  position: relative;
+  margin-bottom: 16rpx;
+}
+
+.photo-thumbnail {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 12rpx;
+  background: #f5f5f5;
+}
+
+.photo-count {
+  position: absolute;
+  bottom: 6rpx;
+  right: 6rpx;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 4rpx 8rpx;
+  border-radius: 8rpx;
+}
+
+.count-text {
+  font-size: 18rpx;
+  color: white;
+}
+
+/* 打卡笔记 */
+.record-notes {
+  background: #f8f8f8;
+  padding: 16rpx;
+  border-radius: 12rpx;
+  border-left: 4rpx solid #ffb3b3;
+}
+
+.notes-text {
+  font-size: 26rpx;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* 地图相关样式 - 复用省份详情页面的样式 */
+.map-stats-section {
+  padding: 0 32rpx 24rpx;
+}
+
+.map-stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20rpx;
+  padding: 24rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.map-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.map-section {
+  background: #f5f5f5;
+  border-radius: 32rpx 32rpx 0 0;
+  min-height: 80vh;
+  padding: 32rpx;
+}
+
+.map-header {
+  text-align: center;
+  margin-bottom: 32rpx;
+}
+
+.map-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.map-subtitle {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.province-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16rpx;
+  margin-bottom: 32rpx;
+}
+
+.province-card {
+  background: white;
+  border-radius: 16rpx;
+  padding: 24rpx 16rpx;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.province-card:active {
+  transform: translateY(-2rpx);
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.15);
+}
+
+.province-card.locked {
+  background: #f8f8f8;
+  opacity: 0.6;
+}
+
+.province-card.unlocked {
+  border: 2rpx solid #4CAF50;
+}
+
+.province-icon {
+  margin-bottom: 12rpx;
+}
+
+.province-emoji {
+  font-size: 32rpx;
+  display: block;
+}
+
+.province-card.locked .province-emoji {
+  filter: grayscale(1);
+  opacity: 0.5;
+}
+
+.province-info {
+  margin-bottom: 16rpx;
+}
+
+.province-name {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 6rpx;
+}
+
+.province-card.locked .province-name {
+  color: #999;
+}
+
+.province-stats {
+  font-size: 20rpx;
+  color: #4CAF50;
+  font-weight: 500;
+}
+
+.province-locked {
+  font-size: 20rpx;
+  color: #999;
+}
+
+.completion-indicator {
+  margin-top: 12rpx;
+}
+
+.completion-bar {
+  height: 4rpx;
+  background: #f0f0f0;
+  border-radius: 2rpx;
+  overflow: hidden;
+  margin-bottom: 6rpx;
+}
+
+.completion-fill {
+  height: 100%;
+  background: #4CAF50;
+  border-radius: 2rpx;
+  transition: width 0.3s ease;
+}
+
+.completion-text {
+  font-size: 18rpx;
+  color: #4CAF50;
+  font-weight: 600;
+}
+
+.unlock-badge {
+  position: absolute;
+  top: 6rpx;
+  right: 6rpx;
+}
+
+.badge-text {
+  font-size: 16rpx;
+}
+
+.map-legend {
+  display: flex;
+  justify-content: center;
+  gap: 32rpx;
+  margin-top: 24rpx;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.legend-color {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+}
+
+.legend-color.unlocked {
+  background: #4CAF50;
+}
+
+.legend-color.locked {
+  background: #ddd;
+}
+
+.legend-text {
+  font-size: 22rpx;
+  color: #666;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 80rpx 32rpx;
+  background: #f5f5f5;
+  border-radius: 32rpx 32rpx 0 0;
+  min-height: 60vh;
+}
+
+.empty-icon {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 32rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.empty-subtitle {
+  font-size: 24rpx;
+  color: #ccc;
+  display: block;
+}
+
+/* 底部间距 */
+.bottom-spacing {
+  height: 40rpx;
+}
+
+/* 响应式调整 */
+@media (max-width: 375px) {
+  .province-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12rpx;
+  }
+  
+  .record-card {
+    padding: 24rpx;
+  }
+  
+  .museum-name {
+    font-size: 28rpx;
+  }
+}

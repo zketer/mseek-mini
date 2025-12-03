@@ -1,0 +1,83 @@
+<!--qualification.wxml-->
+<scroll-view class="scrollarea" scroll-y type="list">
+  <!-- 营业执照 -->
+  <view class="license-section">
+    <view class="section-header">
+      <text class="section-title">营业执照</text>
+      <text class="section-subtitle">点击可查看大图</text>
+    </view>
+    <view class="license-container">
+      <image 
+        src="{{businessLicenseImage}}" 
+        class="license-image" 
+        mode="aspectFit"
+        bindtap="onPreviewLicense"
+      />
+      <view class="license-note">
+        <text class="note-text"><!-- TODO: 待更新 - 使用真实营业执照图片 --></text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 公司信息 -->
+  <view class="company-section">
+    <view class="section-header">
+      <text class="section-title">企业基本信息</text>
+    </view>
+    <view class="info-list">
+      <view class="info-item">
+        <text class="info-label">企业名称</text>
+        <text class="info-value">{{companyInfo.name}}</text>
+      </view>
+      <view class="info-item" bindtap="onCopyCreditCode">
+        <text class="info-label">统一社会信用代码</text>
+        <view class="info-value-row">
+          <text class="info-value">{{companyInfo.creditCode}}</text>
+          <text class="copy-hint">点击复制</text>
+        </view>
+      </view>
+      <view class="info-item">
+        <text class="info-label">经营范围</text>
+        <text class="info-value">{{companyInfo.businessScope}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">注册地址</text>
+        <text class="info-value">{{companyInfo.address}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">注册日期</text>
+        <text class="info-value">{{companyInfo.registrationDate}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">注册资本</text>
+        <text class="info-value">{{companyInfo.registrationCapital}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">法定代表人</text>
+        <text class="info-value">{{companyInfo.legalRepresentative}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 查询提示 -->
+  <view class="query-section">
+    <view class="query-card" bindtap="onQueryCompany">
+      <view class="query-content">
+        <text class="query-title">企业信息查询</text>
+        <text class="query-desc">可在国家企业信用信息公示系统查询更多详细信息</text>
+      </view>
+      <view class="query-arrow">
+        <icon type="arrow" size="16" color="#ccc"></icon>
+      </view>
+    </view>
+  </view>
+
+  <!-- 更新说明 -->
+  <view class="update-note">
+    <text class="note-title">说明</text>
+    <text class="note-content">以上信息均为真实有效，如有变更将及时更新。企业资质信息可通过国家企业信用信息公示系统进行验证。</text>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="bottom-spacing"></view>
+</scroll-view>

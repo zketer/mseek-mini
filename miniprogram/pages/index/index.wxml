@@ -1,0 +1,117 @@
+<!--index.wxml-->
+<view class="page-container">
+  <!-- 轮播图 -->
+  <view class="banner-section">
+    <swiper class="banner-swiper" autoplay="{{true}}" interval="3000" duration="500" circular="{{true}}" indicator-dots="{{true}}" indicator-color="rgba(255,255,255,0.5)" indicator-active-color="#fff">
+      <swiper-item wx:for="{{bannerList}}" wx:key="id">
+        <view class="banner-item" bindtap="onBannerTap" data-id="{{item.id}}">
+          <image src="{{item.image}}" mode="aspectFill" class="banner-image" />
+          <view class="banner-overlay">
+            <view class="banner-title">{{item.title}}</view>
+            <view class="banner-subtitle">{{item.subtitle}}</view>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <!-- 公告栏 -->
+  <view class="notice-section" wx:if="{{announcements.length > 0}}">
+    <view class="notice-container">
+      <icon class="notice-icon" type="info" size="16" color="#ff8fa3"></icon>
+      <swiper class="notice-swiper" autoplay="{{true}}" interval="4000" duration="300" vertical="{{true}}" circular="{{true}}">
+        <swiper-item wx:for="{{announcements}}" wx:key="id">
+          <text class="notice-text" bindtap="onNoticeTap" data-id="{{item.id}}">{{item.content}}</text>
+        </swiper-item>
+      </swiper>
+    </view>
+  </view>
+
+  <!-- 快速入口 -->
+  <view class="quick-entry-section">
+    <view class="quick-entry-grid">
+      <view class="quick-entry-item" wx:for="{{quickEntries}}" wx:key="id" bindtap="onQuickEntryTap" data-type="{{item.type}}">
+        <view class="quick-entry-icon">
+          <image src="{{item.icon}}" mode="aspectFit" class="entry-icon" />
+        </view>
+        <text class="quick-entry-text">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 热门博物馆 -->
+  <view class="section">
+    <view class="section-header">
+      <view class="section-title">
+        <text class="title-text">热门博物馆</text>
+        <text class="title-subtitle">精选推荐</text>
+      </view>
+      <view class="section-more" bindtap="onViewMoreMuseums">
+        <text class="more-text">查看更多</text>
+        <icon class="more-icon" type="arrow" size="12" color="#999"></icon>
+      </view>
+    </view>
+    
+    <scroll-view class="museum-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}">
+      <view class="museum-list">
+        <view class="museum-card" wx:for="{{hotMuseums}}" wx:key="id" bindtap="onMuseumTap" data-id="{{item.id}}">
+          <view class="museum-image-container">
+            <image src="{{item.image}}" mode="aspectFill" class="museum-image" />
+            <view class="museum-badge" wx:if="{{item.isHot}}">热门</view>
+          </view>
+          <view class="museum-info">
+            <view class="museum-name">{{item.name}}</view>
+            <view class="museum-location">
+              <icon type="locationfill" size="12" color="#999"></icon>
+              <text class="location-text">{{item.location}}</text>
+            </view>
+            <!-- 博物馆标签 -->
+            <view class="museum-tags">
+              <!-- 评分标签 -->
+              <view class="tag rating-tag">
+                <text class="rating-score">{{item.rating || 4.5}}</text>
+                <text class="rating-star">★</text>
+              </view>
+              
+              <!-- 后端返回的标签 -->
+              <view wx:for="{{item.tags}}" wx:key="id" wx:for-item="tag" class="tag backend-tag" style="background-color: {{tag.color || '#f0f8ff'}};">
+                {{tag.name}}
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 最新展览 -->
+  <view class="section">
+    <view class="section-header">
+      <view class="section-title">
+        <text class="title-text">最新展览</text>
+        <text class="title-subtitle">不容错过</text>
+      </view>
+      <view class="section-more" bindtap="onViewMoreExhibitions">
+        <text class="more-text">查看更多</text>
+        <icon class="more-icon" type="arrow" size="12" color="#999"></icon>
+      </view>
+    </view>
+    
+    <view class="exhibition-list">
+      <view class="exhibition-card" wx:for="{{exhibitions}}" wx:key="id" bindtap="onExhibitionTap" data-id="{{item.id}}">
+        <image src="{{item.image}}" mode="aspectFill" class="exhibition-image" />
+        <view class="exhibition-info">
+          <view class="exhibition-title">{{item.title}}</view>
+          <view class="exhibition-museum">{{item.museum}}</view>
+          <view class="exhibition-date">{{item.startDate}} - {{item.endDate}}</view>
+          <view class="exhibition-status {{item.status === '进行中' ? 'status-active' : 'status-upcoming'}}">
+            {{item.status}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="bottom-spacing"></view>
+</view>

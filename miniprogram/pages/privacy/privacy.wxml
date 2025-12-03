@@ -1,0 +1,51 @@
+<!--privacy.wxml-->
+<scroll-view class="scrollarea" scroll-y type="list">
+  <!-- 政策标题 -->
+  <view class="header-section">
+    <text class="policy-title">文博探索隐私权政策</text>
+    <text class="last-updated">最后更新：{{lastUpdated}}</text>
+    <!-- TODO: 待更新 - 根据实际政策更新时间调整 -->
+  </view>
+
+  <!-- 政策内容 -->
+  <view class="content-section">
+    <view class="welcome-text">
+      <text class="welcome-content">我们深知个人信息对您的重要性，并会尽全力保护您的个人信息安全可靠。本隐私权政策将帮助您了解我们如何收集、使用、存储和分享您的个人信息。</text>
+    </view>
+
+    <!-- 重要提醒 -->
+    <view class="important-notice">
+      <view class="notice-header">
+        <icon type="info" size="20" color="#ff8fa3"></icon>
+        <text class="notice-title">重要提醒</text>
+      </view>
+      <text class="notice-content">请您在使用文博探索服务前，仔细阅读并充分理解本政策。如果您不同意本政策的任何内容，请立即停止使用我们的服务。</text>
+    </view>
+
+    <!-- 政策条款 -->
+    <view class="sections-container">
+      <view class="section-item" wx:for="{{sections}}" wx:key="title">
+        <text class="section-title">{{item.title}}</text>
+        <text class="section-content">{{item.content}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 生效日期 -->
+  <view class="effective-section">
+    <view class="effective-card">
+      <text class="effective-title">生效日期</text>
+      <text class="effective-content">本隐私权政策自{{lastUpdated}}起生效。我们保留在法律允许的范围内修改本政策的权利。</text>
+      <!-- TODO: 待更新 - 根据实际生效日期调整 -->
+    </view>
+  </view>
+
+  <!-- 返回顶部按钮 -->
+  <view class="back-to-top" bindtap="scrollToTop">
+    <icon type="success" size="20" color="#fff"></icon>
+    <text class="back-text">返回顶部</text>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="bottom-spacing"></view>
+</scroll-view>

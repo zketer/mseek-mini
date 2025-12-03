@@ -1,0 +1,167 @@
+/**privacy.wxss**/
+page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+}
+
+.scrollarea {
+  flex: 1;
+  overflow-y: scroll;
+}
+
+/* 政策标题 */
+.header-section {
+  background: #fff;
+  padding: 40rpx 32rpx;
+  text-align: center;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.policy-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.last-updated {
+  font-size: 22rpx;
+  color: #666;
+}
+
+/* 政策内容 */
+.content-section {
+  margin: 40rpx 32rpx;
+}
+
+.welcome-text {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 32rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.welcome-content {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.8;
+  text-align: justify;
+}
+
+/* 重要提醒 */
+.important-notice {
+  background: linear-gradient(135deg, #fff5f5, #ffeaea);
+  border-radius: 20rpx;
+  padding: 32rpx;
+  margin-bottom: 32rpx;
+  border-left: 8rpx solid #ffb3b3;
+  box-shadow: 0 4rpx 20rpx rgba(255, 107, 107, 0.1);
+}
+
+.notice-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.notice-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #ff8fa3;
+  margin-left: 12rpx;
+}
+
+.notice-content {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 政策条款 */
+.sections-container {
+  background: #fff;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.section-item {
+  padding: 32rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.section-item:last-child {
+  border-bottom: none;
+}
+
+.section-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.section-content {
+  font-size: 24rpx;
+  color: #555;
+  line-height: 1.8;
+  white-space: pre-line;
+  text-align: justify;
+}
+
+/* 生效日期 */
+.effective-section {
+  margin: 0 32rpx 40rpx;
+}
+
+.effective-card {
+  background: linear-gradient(135deg, #e8f5e8, #f0f9f0);
+  border-radius: 20rpx;
+  padding: 32rpx;
+  border-left: 8rpx solid #4ecdc4;
+  box-shadow: 0 4rpx 20rpx rgba(78, 205, 196, 0.1);
+}
+
+.effective-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #4ecdc4;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.effective-content {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 返回顶部 */
+.back-to-top {
+  position: fixed;
+  right: 32rpx;
+  bottom: 120rpx;
+  background: #666;
+  border-radius: 50rpx;
+  padding: 20rpx 24rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+.back-text {
+  font-size: 22rpx;
+  color: white;
+  margin-left: 8rpx;
+}
+
+/* 底部间距 */
+.bottom-spacing {
+  height: 40rpx;
+}

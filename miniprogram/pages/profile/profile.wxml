@@ -1,0 +1,120 @@
+<!--profile.wxml-->
+<view class="page-container">
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="user-info">
+      <view class="avatar-container" bindtap="onAvatarTap">
+        <image src="{{userInfo.avatar || '/images/head.png'}}" mode="aspectFill" class="user-avatar" />
+        <view class="avatar-badge">
+          <icon type="camera" size="12" color="#fff"></icon>
+        </view>
+      </view>
+      <view class="user-details">
+        <view class="user-name" bindtap="onAvatarTap">
+          {{userInfo.isLogin ? userInfo.nickname : '点击登录'}}
+        </view>
+        <view class="user-level">
+          <text class="level-badge">Lv.{{userInfo.level || 1}}</text>
+          <text class="level-title">{{userInfo.levelTitle || '文化新手'}}</text>
+        </view>
+        <view class="user-id">ID: {{userInfo.id || '未登录'}}</view>
+      </view>
+    </view>
+    
+    <!-- 统计数据 -->
+    <view class="stats-container">
+      <view class="stat-item" bindtap="onStatsTap" data-type="checkins">
+        <text class="stat-number">{{userStats.checkins}}</text>
+        <text class="stat-label">打卡</text>
+      </view>
+      <view class="stat-item" bindtap="onStatsTap" data-type="points">
+        <text class="stat-number">{{userStats.points}}</text>
+        <text class="stat-label">积分</text>
+      </view>
+      <view class="stat-item" bindtap="onStatsTap" data-type="favorites">
+        <text class="stat-number">{{userStats.favorites}}</text>
+        <text class="stat-label">收藏</text>
+      </view>
+      <view class="stat-item" bindtap="onStatsTap" data-type="rank">
+        <text class="stat-number">{{userStats.rank}}</text>
+        <text class="stat-label">排名</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-section">
+    <view class="menu-group">
+      <view class="menu-item" bindtap="onMenuTap" data-type="history">
+        <view class="menu-icon">
+          <image src="/images/Icon1.png" mode="aspectFit" class="icon-image" />
+        </view>
+        <text class="menu-text">打卡历史</text>
+        <icon class="menu-arrow" type="arrow" size="12" color="#ccc"></icon>
+      </view>
+      
+      <view class="menu-item" bindtap="onMenuTap" data-type="favorites">
+        <view class="menu-icon">
+          <image src="/images/Icon2.png" mode="aspectFit" class="icon-image" />
+        </view>
+        <text class="menu-text">我的收藏</text>
+        <icon class="menu-arrow" type="arrow" size="12" color="#ccc"></icon>
+      </view>
+      
+      <view class="menu-item" bindtap="onMenuTap" data-type="achievements">
+        <view class="menu-icon">
+          <image src="/images/Icon3.png" mode="aspectFit" class="icon-image" />
+        </view>
+        <text class="menu-text">成就徽章</text>
+        <icon class="menu-arrow" type="arrow" size="12" color="#ccc"></icon>
+      </view>
+
+      <view class="menu-item" bindtap="onMenuTap" data-type="points" wx:if="{{false}}">
+        <view class="menu-icon">
+          <image src="/images/Icon4.png" mode="aspectFit" class="icon-image" />
+        </view>
+        <text class="menu-text">积分商城</text>
+        <view class="menu-badge hot">热门</view>
+        <icon class="menu-arrow" type="arrow" size="12" color="#ccc"></icon>
+      </view>
+      
+      <view class="menu-item" bindtap="onMenuTap" data-type="invite" wx:if="{{false}}">
+        <view class="menu-icon">
+          <image src="/images/Icon5.png" mode="aspectFit" class="icon-image" />
+        </view>
+        <text class="menu-text">邀请好友</text>
+        <view class="menu-badge reward">有奖</view>
+        <icon class="menu-arrow" type="arrow" size="12" color="#ccc"></icon>
+      </view>
+
+      <view class="menu-item" bindtap="onMenuTap" data-type="settings">
+        <view class="menu-icon">
+          <image src="/images/Icon6.png" mode="aspectFit" class="icon-image" />
+        </view>
+        <text class="menu-text">设置</text>
+        <icon class="menu-arrow" type="arrow" size="12" color="#ccc"></icon>
+      </view>
+      
+      <view class="menu-item" bindtap="onMenuTap" data-type="feedback">
+        <view class="menu-icon">
+          <image src="/images/Icon1.png" mode="aspectFit" class="icon-image" />
+        </view>
+        <text class="menu-text">反馈建议</text>
+        <icon class="menu-arrow" type="arrow" size="12" color="#ccc"></icon>
+      </view>
+      
+      <view class="menu-item" bindtap="onMenuTap" data-type="about">
+        <view class="menu-icon">
+          <image src="/images/Icon2.png" mode="aspectFit" class="icon-image" />
+        </view>
+        <text class="menu-text">关于我们</text>
+        <icon class="menu-arrow" type="arrow" size="12" color="#ccc"></icon>
+      </view>
+    </view>
+  </view>
+
+
+
+  <!-- 底部间距 -->
+  <view class="bottom-spacing"></view>
+</view>

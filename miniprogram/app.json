@@ -1,0 +1,88 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/discovery/discovery",
+    "pages/checkin/checkin", 
+    "pages/profile/profile",
+    "pages/login/login",
+    "pages/hot-museums/index",
+    "pages/museum/detail",
+    "pages/museum/list",
+    "pages/museum/nearby",
+    "pages/exhibition/detail",
+    "pages/exhibition/list",
+    "pages/exhibitions/list",
+    "pages/user/profile",
+    "pages/user/favorites",
+    "pages/user/history",
+    "pages/search/search",
+    "pages/map/map",
+    "pages/settings/settings",
+    "pages/points/mall",
+    "pages/points/detail",
+    "pages/social/square",
+    "pages/feedback/feedback",
+    "pages/about/about",
+    "pages/qualification/qualification",
+    "pages/agreement/agreement",
+    "pages/privacy/privacy",
+    "pages/achievements/achievements",
+    "pages/province/detail",
+    "pages/city/detail",
+    "pages/checkin-detail/checkin-detail",
+    "pages/checkin-action/checkin-action",
+    "pages/draft-list/draft-list"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "博物馆打卡",
+    "navigationBarBackgroundColor": "#ffffff"
+  },
+  "tabBar": {
+    "color": "#8a8a8a",
+    "selectedColor": "#ff8fa3",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/house.png",
+        "selectedIconPath": "images/house1.png"
+      },
+      {
+        "pagePath": "pages/discovery/discovery",
+        "text": "发现",
+        "iconPath": "images/bubble_circle.png",
+        "selectedIconPath": "images/bubble_circle1.png"
+      },
+      {
+        "pagePath": "pages/checkin/checkin",
+        "text": "打卡",
+        "iconPath": "images/house.png",
+        "selectedIconPath": "images/house1.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/bubble_circle.png",
+        "selectedIconPath": "images/bubble_circle1.png"
+      }
+    ],
+    "position": "bottom"
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "lazyCodeLoading": "requiredComponents",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于为你推荐附近的博物馆"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+  "miniApp": {
+    "useAuthorizePage": true
+  }
+}

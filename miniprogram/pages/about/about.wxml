@@ -1,0 +1,129 @@
+<!--about.wxml-->
+<scroll-view class="scrollarea" scroll-y type="list">
+  <!-- 应用信息 -->
+  <view class="app-section">
+    <view class="section-header">
+      <text class="section-title">应用信息</text>
+      <text class="section-subtitle">版本与功能管理</text>
+    </view>
+    <view class="app-list">
+      <view class="app-item">
+        <view class="app-content">
+          <text class="app-title">{{appInfo.name}}</text>
+          <text class="app-description">版本 {{appInfo.version}} | {{appInfo.description}}</text>
+        </view>
+      </view>
+      <view class="app-item" bindtap="onCheckUpdate">
+        <view class="app-content">
+          <text class="app-title">检查更新</text>
+          <text class="app-description">获取最新版本</text>
+        </view>
+        <view class="app-arrow">
+          <icon type="download" size="16" color="#ccc"></icon>
+        </view>
+      </view>
+      <view class="app-item" bindtap="onShareApp">
+        <view class="app-content">
+          <text class="app-title">分享应用</text>
+          <text class="app-description">推荐给朋友</text>
+        </view>
+        <view class="app-arrow">
+          <icon type="success" size="16" color="#ccc"></icon>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能特色 - 暂时屏蔽 -->
+  <view class="features-section" wx:if="{{false}}">
+    <view class="section-header">
+      <text class="section-title">功能特色</text>
+      <text class="section-subtitle">让文化探索更有趣</text>
+    </view>
+    <view class="features-grid">
+      <view class="feature-item" wx:for="{{features}}" wx:key="id">
+        <image src="{{item.icon}}" class="feature-icon" mode="aspectFit" />
+        <view class="feature-content">
+          <text class="feature-title">{{item.title}}</text>
+          <text class="feature-description">{{item.description}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 协议与说明 -->
+  <view class="legal-section">
+    <view class="section-header">
+      <text class="section-title">协议与说明</text>
+      <text class="section-subtitle">了解平台规则与权益</text>
+    </view>
+    <view class="legal-list">
+      <view class="legal-item" wx:for="{{legalItems}}" wx:key="id" bindtap="onLegalItemTap" data-id="{{item.id}}">
+        <view class="legal-content">
+          <text class="legal-title">{{item.title}}</text>
+          <text class="legal-description">{{item.description}}</text>
+        </view>
+        <view class="legal-arrow">
+          <icon type="arrow" size="16" color="#ccc"></icon>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 联系我们 -->
+  <view class="contact-section">
+    <view class="section-header">
+      <text class="section-title">联系我们</text>
+      <text class="section-subtitle">我们期待您的反馈</text>
+    </view>
+    <view class="contact-list">
+      <view class="contact-item" wx:for="{{contactInfo}}" wx:key="type" bindtap="onContactTap" data-index="{{index}}">
+        <view class="contact-content">
+          <text class="contact-label">{{item.label}}</text>
+          <text class="contact-value">{{item.value}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 更新日志 -->
+  <view class="changelog-section">
+    <view class="section-header">
+      <text class="section-title">更新日志</text>
+      <text class="section-subtitle">版本更新记录</text>
+    </view>
+    <view class="changelog-list">
+      <view class="changelog-item" wx:for="{{changelog}}" wx:key="version">
+        <view class="changelog-header" bindtap="onToggleChangelog" data-index="{{index}}">
+          <text class="changelog-version">v{{item.version}}</text>
+          <view class="header-right">
+            <text class="changelog-date">{{item.date}}</text>
+            <view class="expand-icon {{item.expanded ? 'expanded' : ''}}">
+              <icon type="arrow" size="16" color="#999"></icon>
+            </view>
+          </view>
+        </view>
+        <view class="changelog-content {{item.expanded ? 'expanded' : 'collapsed'}}">
+          <view class="changelog-features">
+            <view class="feature-line" wx:for="{{item.features}}" wx:key="*this" wx:for-item="feature">
+              <text class="feature-bullet">•</text>
+              <text class="feature-text">{{feature}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+
+  <!-- 版权信息 -->
+  <view class="copyright-section">
+    <view class="copyright">
+      <text class="copyright-text">© 2024 文博探索. All rights reserved.</text>
+      <text class="company-info">北京文博科技有限公司</text>
+    </view>
+  </view>
+
+  <!-- 底部间距 -->
+  <view class="bottom-spacing"></view>
+</scroll-view>

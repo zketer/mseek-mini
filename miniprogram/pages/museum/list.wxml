@@ -1,0 +1,15 @@
+<!--museum/list.wxml-->
+<view class="container">
+  <view class="unimplemented-notice">
+    <view class="notice-content">
+      <image src="/images/Icon1.png" class="notice-icon" mode="aspectFit" />
+      <view class="notice-text">
+        <text class="notice-title">博物馆列表页开发中</text>
+        <text class="notice-desc">该功能正在开发中，敬请期待！</text>
+      </view>
+    </view>
+    <view class="notice-actions">
+      <view class="action-btn" bindtap="goBack">返回上页</view>
+    </view>
+  </view>
+</view>

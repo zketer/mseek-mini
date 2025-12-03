@@ -1,0 +1,33 @@
+<!--draft-list.wxml-->
+<view class="draft-list-container">
+  <!-- 暂存列表 -->
+  <view class="draft-list" wx:if="{{draftList.length > 0}}">
+    <view class="draft-item" wx:for="{{draftList}}" wx:key="draftId" bindtap="onDraftTap" data-draft-id="{{item.draftId}}" data-museum-id="{{item.museumId}}">
+      <view class="draft-delete-btn" catchtap="onDeleteDraft" data-draft-id="{{item.draftId}}">
+        <image src="/images/delete.svg" class="delete-icon" mode="aspectFit" />
+      </view>
+      <view class="draft-info">
+        <view class="draft-museum">{{item.museumName}}</view>
+        <view class="draft-preview">
+          <text class="draft-content" wx:if="{{item.feeling}}">{{item.feeling.slice(0, 30)}}{{item.feeling.length > 30 ? '...' : ''}}</text>
+          <text class="draft-content" wx:else>暂无感受内容</text>
+        </view>
+        <view class="draft-meta">
+          <text class="draft-time">{{item.saveTimeText}}</text>
+          <view class="draft-tags">
+            <text class="draft-tag" wx:if="{{item.photos && item.photos.length > 0}}">{{item.photos.length}}张照片</text>
+            <text class="draft-tag" wx:if="{{item.rating > 0}}">{{item.ratingText}}</text>
+            <text class="draft-tag" wx:if="{{item.selectedMood}}">{{item.moodText}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <view class="empty-icon">📝</view>
+    <text class="empty-title">暂无草稿</text>
+    <text class="empty-desc">您还没有保存任何打卡草稿</text>
+  </view>
+</view>

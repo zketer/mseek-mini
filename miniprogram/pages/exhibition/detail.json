@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "展览详情",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#f5f5f5",
+  "onReachBottomDistance": 50,
+  "backgroundTextStyle": "dark"
+}
